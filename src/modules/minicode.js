@@ -48,11 +48,16 @@ export default class MiniCode {
     this.#root = root;
 
     //addButton
+    
+    const para = document.createElement("p")
+    para.textContent = "Atualmente não tenho nenhum projeto para apresentar mas estou trabalhando nisso. Espere aí... talvez você possa me ajudar. Que tal pôr a mão no meu código??"
     const startBtn = document.createElement("button");
-    startBtn.textContent = "INICIAR JOGO";
+    startBtn.textContent = "LA ELE";
     startBtn.addEventListener("click", this.gameStart.bind(this), {
       once: true,
     });
+    
+    this.#root.appendChild(para)
     this.#root.appendChild(startBtn);
 
     const lorem = new Image();

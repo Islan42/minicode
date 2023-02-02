@@ -560,19 +560,8 @@ function hmrAccept(bundle, id) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _minicodeJs = require("./modules/minicode.js");
 var _minicodeJsDefault = parcelHelpers.interopDefault(_minicodeJs);
-//const startBtn = document.getElementById("start-game")
-const numSelect = document.getElementById("num-select");
-const form = document.getElementById("form");
 const panel = document.getElementById("game-panel");
-form.addEventListener("submit", (event)=>{
-    event.preventDefault();
-    while(panel.firstChild)panel.removeChild(panel.firstChild);
-    for(let i = 0; i < numSelect.value; i++){
-        const gamePanel = document.createElement("div");
-        panel.appendChild(gamePanel);
-        const minigame = new (0, _minicodeJsDefault.default)(gamePanel);
-    }
-});
+const minigame = new (0, _minicodeJsDefault.default)(panel);
 
 },{"./modules/minicode.js":"2eVit","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2eVit":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -618,11 +607,14 @@ class MiniCode {
     constructor(root){
         this.#root = root;
         //addButton
+        const para = document.createElement("p");
+        para.textContent = "Atualmente n\xe3o tenho nenhum projeto para apresentar mas estou trabalhando nisso. Espere a\xed... talvez voc\xea possa me ajudar. Que tal p\xf4r a m\xe3o no meu c\xf3digo??";
         const startBtn = document.createElement("button");
-        startBtn.textContent = "INICIAR JOGO";
+        startBtn.textContent = "LA ELE";
         startBtn.addEventListener("click", this.gameStart.bind(this), {
             once: true
         });
+        this.#root.appendChild(para);
         this.#root.appendChild(startBtn);
         const lorem = new Image();
         lorem.src = require("4c286ba0c1da238f"); //mudar para import() [?]
