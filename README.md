@@ -40,4 +40,4 @@ A primeira coisa a se notar é que você deve pressionar um novo botão (escolhi
 
  
 [1]: (src/assets/rdm_01.png)
-[2]: (src/assets/rdm_02.png)
+[2]: src/assets/rdm_02.png
