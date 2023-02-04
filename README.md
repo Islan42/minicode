@@ -1,4 +1,4 @@
-# Minicode {#pt-br}
+# Minicode {pt-br}
 
 ## SOBRE O JOGO
 
@@ -20,7 +20,7 @@ Além disso, quando você pressiona o botão especificado um certo número de ve
 
 Outra coisa importante é manter o ritmo. Quanto maior a frequência de clicks mantida maior o *Boost* na pontuação.
 
-![Coding, Lvl, Pontuação, Boost][1]
+![Coding, Lvl, Pontuação, Boost](src/assets/rdm_01.png)
 
 ### IT'S BUGS TIME
 
@@ -37,7 +37,7 @@ A primeira coisa a se notar é que você deve pressionar um novo botão (escolhi
 - Não tente permanecer com o botão pressionado. ***NÃO VAI FUNCIONAR!***
 
 [clique aqui](#pt-br)
- - [ ]
+
  
-![1]: (src/assets/rdm_01.png)
-![2]: (src/assets/rdm_02.png)
+[1]: (src/assets/rdm_01.png)
+[2]: (src/assets/rdm_02.png)
