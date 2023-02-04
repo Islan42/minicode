@@ -20,7 +20,7 @@ Além disso, quando você pressiona o botão especificado um certo número de ve
 
 Outra coisa importante é manter o ritmo. Quanto maior a frequência de clicks mantida maior o *Boost* na pontuação.
 
-![][img_1]
+![Coding, Lvl, Pontuação, Boost][1]
 
 ### IT'S BUGS TIME
 
@@ -28,7 +28,7 @@ Após um bom tempo pressionando o mesmo botão você provavelmente está entedia
 
 A primeira coisa a se notar é que você deve pressionar um novo botão (escolhido aleatoriamente). Também há dicas visuais para mostrar que você entrou na ***HORA DOS BUGS***, o *Boost* é dobrado e os *Penalties* são setados para 1. A boa notícia é que se você conseguir subir de nível, *Penalties* são resetados para 0, e você terá alcançado muitos pontos.
 
-![][img_2]
+![É HORA DOS BUGS][2]
 
 ### OUTROS
 
@@ -39,5 +39,5 @@ A primeira coisa a se notar é que você deve pressionar um novo botão (escolhi
 [clique aqui](#pt-br)
  - [ ]
  
-[img_1]: (src/assets/rdm_01.png)
-[img_2]: (src/assets/rdm_02.png)
+![1]: (src/assets/rdm_01.png)
+![2]: (src/assets/rdm_02.png)
