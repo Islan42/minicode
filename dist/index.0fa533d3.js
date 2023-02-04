@@ -724,6 +724,7 @@ class MiniCode {
             if (event.key === " ") {
                 this.#canvas.removeEventListener("click", this.#callGameStartBind);
                 document.removeEventListener("keydown", this.#callGameStartBind);
+                event.preventDefault();
                 this.gameStart();
             }
         }
