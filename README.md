@@ -1,5 +1,7 @@
 # Minicode
 
+You can also [read this in english](#minicode-1)
+
 ## SOBRE O JOGO
 
 Minicode é um minijogo de apertar botão: você deve pressionar o botão especificado o mais rápido possível (e repetidas vezes) para completar uma barrinha e subir de nível e, no processo, marcar pontos.
@@ -35,3 +37,7 @@ A primeira coisa a se notar é que você deve pressionar um novo botão (escolhi
 - Ao atingir o *nível 10* as cores mudam para o modo noturno, pois isso é sinal de amadurecimento e profissionalismo.
 - Após *subir de nível*, por alguns milésimos de segundo, ou *ao receber uma marcação de penalidade*, por alguns segundos, você fica impedido de receber uma marcação de penalidade.
 - Não tente permanecer com o botão pressionado. ***NÃO VAI FUNCIONAR!***
+
+# Minicode
+
+Você pode [ler isto em pt-br](#minicode)
