@@ -41,3 +41,39 @@ A primeira coisa a se notar é que você deve pressionar um novo botão (escolhi
 # Minicode
 
 Você pode [ler isto em pt-br](#minicode)
+
+## ABOUT
+
+Minicode is a pressbutton minigame: You must press the specified button the faster you can (repeatedly) until complete a bar and level up and, score some code points.
+
+When I was building my own web-portfolio, I noticed it lacked of content, I hasn't build nothing really interesting. So I thought about building a minigame for it, something that wouldn't be so complex, but would also be fun. Almost instantly, I remembered a GTA SA minigame I played a lot as a kid: when at the gym you could enter a minigame to lift dumbbells, you had to press a certain button repeatedly to complete a rep.
+
+With that in mind I brainstormed about the features I would like to add to the minigame. Besides the challenges I would have to tackle, the metalanguage involved in this minigame was the thing that pushed me the most.
+
+So, that is the result. I hope you enjoy.
+
+## GAMEPLAY AND FEATURES
+
+### THE BASICS
+
+It's a very simple minigame: Press **SPACEBAR** as fast as You can, as much as You can until complete the *Coding Bar* in the top-left corner. When You do You'll *level up*, gradually increasing difficult. Pressing the *wrong key* decreases Coding Bar. Coding Bar also decreases regularly.If the Coding Bar drops to zero, though, You will receive a *Penaltie* mark, if You haven't one yet. If Coding Bar drops to zero and You have a Penalitie Mark, it's game over.
+
+When you press the right key a certain number of times You increase your *Score*.
+
+Maintain rhythm is important, You gain a *Boost* on your Score based on the frequency of your right presses.
+
+![Coding, Lvl, Score, Boost](src/assets/rdm_01.png)
+
+### IT'S BUGS TIME
+
+After pressing SPACEBAR for so long You'r probably bored. But after a random amount of time, afer you *level up*, You will have to face the ***BUGS TIME***.
+
+The first thing to note is, there is a new key to press (chosed randomly). You also have visual hints to show You've entered the ***BUGS TIME***. Your *Boost* is now doubled, and *Penalties* were set to 1. The good news: when you *level up*, *Penalties* will drop to zero, and You will have a much higher Score.
+
+![IT'S BUGS TIME](src/assets/rdm_02.png)
+
+### MISC
+
+- Reaching *Lvl 10* enable dark mode, which is a signal of maturation and professionalism.
+- After *lvl up*, for a few miliseconds, or after *get a penaltie*, for a few seconds, you are prevented from get a new penaltie.
+- Dont even try to maintain the key pressed, ***IT WILL NOT WORK!***
