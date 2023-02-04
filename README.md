@@ -1,4 +1,4 @@
-# Minicode {pt-br}
+# Minicode
 
 ## SOBRE O JOGO
 
@@ -28,16 +28,10 @@ Após um bom tempo pressionando o mesmo botão você provavelmente está entedia
 
 A primeira coisa a se notar é que você deve pressionar um novo botão (escolhido aleatoriamente). Também há dicas visuais para mostrar que você entrou na ***HORA DOS BUGS***, o *Boost* é dobrado e os *Penalties* são setados para 1. A boa notícia é que se você conseguir subir de nível, *Penalties* são resetados para 0, e você terá alcançado muitos pontos.
 
-![É HORA DOS BUGS] [2]
+![É HORA DOS BUGS](src/assets/rdm_02.png)
 
 ### OUTROS
 
 - Ao atingir o *nível 10* as cores mudam para o modo noturno, pois isso é sinal de amadurecimento e profissionalismo.
 - Após *subir de nível*, por alguns milésimos de segundo, ou *ao receber uma marcação de penalidade*, por alguns segundos, você fica impedido de receber uma marcação de penalidade.
 - Não tente permanecer com o botão pressionado. ***NÃO VAI FUNCIONAR!***
-
-[clique aqui](#pt-br)
-
- 
-[1]: (src/assets/rdm_01.png)
-[2]: src/assets/rdm_02.png
