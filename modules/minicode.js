@@ -61,17 +61,23 @@ export default class MiniCode {
     this.#root.appendChild(startBtn);
 
     const lorem = new Image();
-    lorem.src = require("../assets/lorem.png"); //mudar para import() [?]
+    lorem.src = "../assets/lorem.png"
+    //lorem.src = require("../assets/lorem.png"); //mudar para import() [?]
     const desk = new Image();
-    desk.src = require("../assets/desk.png");
+    desk.src = "../assets/desk.png"
+    //desk.src = require("../assets/desk.png");
     const key = new Image();
-    key.src = require("../assets/key.png");
+    key.src = "../assets/key.png"
+    //key.src = require("../assets/key.png");
     const spacebar = new Image();
-    spacebar.src = require("../assets/spacebar.png")
+    spacebar.src = "../assets/spacebar.png"
+    //spacebar.src = require("../assets/spacebar.png")
     const penalties = new Image();
-    penalties.src = require("../assets/penalties.png")
+    penalties.src = "../assets/penalties.png"
+    //penalties.src = require("../assets/penalties.png")
     const bugs = new Image()
-    bugs.src = require("../assets/bugs.png")
+    bugs.src = "../assets/bugs.png"
+    //bugs.src = require("../assets/bugs.png")
     this.#assets = { lorem, desk, key, spacebar, penalties, bugs };
   }
 
