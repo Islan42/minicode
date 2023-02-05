@@ -34,7 +34,8 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           path: dist/
-        env: GITHUB_PAGES: true
+        env: 
+          GITHUB_PAGES: true
 
   # Deployment job
   deploy:
