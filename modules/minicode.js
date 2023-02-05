@@ -20,6 +20,7 @@ export default class MiniCode {
   #preventPenalties;
 
   #decreaseInterval;
+  #boostTimeouts;
   #keyHandlerBind;
   #callGameStartBind
 
@@ -27,7 +28,7 @@ export default class MiniCode {
   #fatiguepower;
   #codepower;
 
-  #bugsInterval;
+  #bugsTimeout;
   #bugsON;
   #bugsSaveNormal;
   #bugsCount;
@@ -62,29 +63,20 @@ export default class MiniCode {
 
     const lorem = new Image();
     lorem.src = "assets/lorem.png"
-    //lorem.src = require("../assets/lorem.png"); //mudar para import() [?]
     const desk = new Image();
     desk.src = "assets/desk.png"
-    //desk.src = require("../assets/desk.png");
     const key = new Image();
     key.src = "assets/key.png"
-    //key.src = require("../assets/key.png");
     const spacebar = new Image();
     spacebar.src = "assets/spacebar.png"
-    //spacebar.src = require("../assets/spacebar.png")
     const penalties = new Image();
     penalties.src = "assets/penalties.png"
-    //penalties.src = require("../assets/penalties.png")
     const bugs = new Image()
     bugs.src = "assets/bugs.png"
-    //bugs.src = require("../assets/bugs.png")
     this.#assets = { lorem, desk, key, spacebar, penalties, bugs };
   }
 
   gameStart() {
-    //this.#canvas.removeEventListener("click", this.#callGameStartBind)
-    //document.removeEventListener("keydown", this.#callGameStartBind)
-    
     this.#gameOn = true;
     this.#coding = 50;
     this.#lvl = { lvl: 0, prevLvl: 0, nextLvl: 100, maxLvl: 0 };
@@ -101,6 +93,7 @@ export default class MiniCode {
     this.#bugsSaveNormal = { coding: 0, prevLvl: 0, nextLvl: 100 };
     this.#bugsCount = [];
     this.#preventPenalties = false;
+    this.#boostTimeouts = []
     this.#keyHandlerBind = this.keyHandler.bind(this);
     this.#callGameStartBind = this.callGameStart.bind(this);
     this.#controlFR = 0;
@@ -113,7 +106,7 @@ export default class MiniCode {
     //this.updateBars();
     this.setKey(" ");
     this.setDecreaseInter(500);
-    this.setBugsInter(10, 18);
+    this.setBugsTimeout(10, 16);
     
     if (!this.#canvas) {
       this.#intBar = document.createElement("p");
@@ -146,7 +139,10 @@ export default class MiniCode {
   gameOver() {
     clearInterval(this.#decreaseInterval);
     document.removeEventListener("keydown", this.#keyHandlerBind);
-    clearTimeout(this.#bugsInterval);
+    clearTimeout(this.#bugsTimeout);
+    for (let timeout of this.#boostTimeouts){
+      clearTimeout(timeout)
+    }
     this.#gameOn = false;
 
     this.#canvas.addEventListener("click", this.#callGameStartBind)
@@ -205,12 +201,12 @@ export default class MiniCode {
     }
     this.#decreaseInterval = setInterval(this.negativeCoding.bind(this), inter);
   }
-  setBugsInter(min, max) {
+  setBugsTimeout(min, max) {
     const time = this.random(min, max);
-    if (this.#bugsInterval) {
-      clearTimeout(this.#bugsInterval);
+    if (this.#bugsTimeout) {
+      clearTimeout(this.#bugsTimeout);
     }
-    this.#bugsInterval = setTimeout(
+    this.#bugsTimeout = setTimeout(
       () => {
         this.#bugsON.start = true
         console.log("OK")
@@ -245,12 +241,20 @@ export default class MiniCode {
   }
   updateBoost() {
     this.#boost++;
+    const timeout = setTimeout(() => this.#boost --, 6500); //BUG #02 [SOLVED]
+    this.#boostTimeouts.push(timeout); 
+  }
+  /*
+  updateBoost() {
+    this.#boost++;
     setTimeout(() => {
       if (this.#boost > 0) {
         this.#boost--;
       }
     }, 6500); //BUG #02
-
+  }
+  */
+  checkBoost(){
     switch (true) {
       case this.#boost < 5:
         this.#boostMulti = 1;
@@ -285,7 +289,7 @@ export default class MiniCode {
       default:
         this.#boostMulti = 6.0;
         break;
-    } //BUG #03
+    } //BUG #03 [SOLVED]
   }
   updatePoints() {
     const aux = this.#clicks % 10;
@@ -322,7 +326,7 @@ export default class MiniCode {
     if (!this.#preventPenalties) {
       this.#penalties++;
       this.#preventPenalties = true;
-      setTimeout(() => (this.#preventPenalties = false), 2700);
+      setTimeout(() => (this.#preventPenalties = false), 2600);
       this.#spritePen = 0;
     }
   }
@@ -396,6 +400,12 @@ export default class MiniCode {
     let newDecInter;
     let newCodePower;
     switch (true) {
+      case this.#lvl.lvl === 0:
+        skip = 100;
+        newFatigue = 5;
+        newDecInter = 500;
+        newCodePower = 25;
+        break;
       case this.#lvl.lvl < 5:
         skip = 200;
         newFatigue = 15;
@@ -525,7 +535,7 @@ export default class MiniCode {
   itsNotBugsTime() {
     //MUDAR VISUAL
     this.setKey(" ");
-    this.setBugsInter(10, 18);
+    this.setBugsTimeout(10, 16);
     this.#pointsMulti = 1;
     this.#penalties = 0;
     this.#bugsON = { start: false, end: false };
@@ -555,6 +565,7 @@ export default class MiniCode {
     }
     
     if(this.#gameOn) {
+      this.checkBoost();
       this.updateBars();
       drawDesk.call(this);
       drawLorem.call(this);
