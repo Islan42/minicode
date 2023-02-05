@@ -1,4 +1,4 @@
-# Minicode
+# MiniCode
 
 You can also [read this in english](#minicode-1)
 
@@ -38,7 +38,7 @@ A primeira coisa a se notar é que você deve pressionar um novo botão (escolhi
 - Após *subir de nível*, por alguns milésimos de segundo, ou *ao receber uma marcação de penalidade*, por alguns segundos, você fica impedido de receber uma marcação de penalidade.
 - Não tente permanecer com o botão pressionado. ***NÃO VAI FUNCIONAR!***
 
-# Minicode
+# MiniCode
 
 Você pode [ler isto em pt-br](#minicode)
 
