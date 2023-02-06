@@ -1,6 +1,7 @@
 # MiniCode
 
 You can also [read this in english](#minicode-1)
+Site: https://islan42.github.io/minicode/
 
 ## SOBRE O JOGO
 
@@ -22,7 +23,7 @@ Além disso, quando você pressiona o botão especificado um certo número de ve
 
 Outra coisa importante é manter o ritmo. Quanto maior a frequência de clicks mantida maior o *Boost* na pontuação.
 
-![Coding, Lvl, Pontuação, Boost](src/assets/rdm_01.png)
+![Coding, Lvl, Pontuação, Boost](assets/rdm_01.png)
 
 ### IT'S BUGS TIME
 
@@ -30,7 +31,7 @@ Após um bom tempo pressionando o mesmo botão você provavelmente está entedia
 
 A primeira coisa a se notar é que você deve pressionar um novo botão (escolhido aleatoriamente). Também há dicas visuais para mostrar que você entrou na ***HORA DOS BUGS***, o *Boost* é dobrado e os *Penalties* são setados para 1. A boa notícia é que se você conseguir subir de nível, *Penalties* são resetados para 0, e você terá alcançado muitos pontos.
 
-![É HORA DOS BUGS](src/assets/rdm_02.png)
+![É HORA DOS BUGS](assets/rdm_02.png)
 
 ### OUTROS
 
@@ -41,6 +42,7 @@ A primeira coisa a se notar é que você deve pressionar um novo botão (escolhi
 # MiniCode
 
 Você pode [ler isto em pt-br](#minicode)
+Site: https://islan42.github.io/minicode/
 
 ## ABOUT
 
@@ -62,7 +64,7 @@ When you press the right key a certain number of times You increase your *Score*
 
 Maintain rhythm is important, You gain a *Boost* on your Score based on the frequency of your right presses.
 
-![Coding, Lvl, Score, Boost](src/assets/rdm_01.png)
+![Coding, Lvl, Score, Boost](assets/rdm_01.png)
 
 ### IT'S BUGS TIME
 
@@ -70,7 +72,7 @@ After pressing SPACEBAR for so long You'r probably bored. But after a random amo
 
 The first thing to note is, there is a new key to press (chosed randomly). You also have visual hints to show You've entered the ***BUGS TIME***. Your *Boost* is now doubled, and *Penalties* were set to 1. The good news: when you *level up*, *Penalties* will drop to zero, and You will have a much higher Score.
 
-![IT'S BUGS TIME](src/assets/rdm_02.png)
+![IT'S BUGS TIME](assets/rdm_02.png)
 
 ### MISC
 
