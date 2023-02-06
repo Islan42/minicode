@@ -1,5 +1,7 @@
 export default class MiniCode {
   #root;
+  
+  #gameOn;
   #intBar;
   #lvlBar;
   #pointsBar; 
@@ -10,10 +12,9 @@ export default class MiniCode {
   #coding;
   #lvl; 
   #score; 
-  #penalties;
   #boost;
-  #bugsLvl;
-
+  #penalties;
+  
   #clicks; 
   #pointsMulti; 
   #boostMulti; 
@@ -21,6 +22,7 @@ export default class MiniCode {
 
   #decreaseInterval;
   #boostTimeouts;
+  
   #keyHandlerBind;
   #callGameStartBind
 
@@ -28,6 +30,7 @@ export default class MiniCode {
   #fatiguepower;
   #codepower;
 
+  #bugsLvl;
   #bugsTimeout;
   #bugsON;
   #bugsSaveNormal;
@@ -35,7 +38,6 @@ export default class MiniCode {
 
   #canvas;
   #ctx;
-  #gameOn;
 
   #controlFR;
   #spriteKey;
@@ -80,12 +82,12 @@ export default class MiniCode {
     this.#gameOn = true;
     this.#coding = 50;
     this.#lvl = { lvl: 0, prevLvl: 0, nextLvl: 100, maxLvl: 0 };
-    this.#codepower = 25;
-    this.#fatiguepower = 5;
-    this.#clicks = 0;
     this.#score = 0;
     this.#boost = 0;
     this.#penalties = 0;
+    this.#codepower = 25;
+    this.#fatiguepower = 5;
+    this.#clicks = 0;
     this.#pointsMulti = 1;
     this.#boostMulti = 1;
     this.#bugsLvl = { lvl: 0, prevLvl: 0, nextLvl: 1000 };
@@ -244,16 +246,6 @@ export default class MiniCode {
     const timeout = setTimeout(() => this.#boost --, 6500); //BUG #02 [SOLVED]
     this.#boostTimeouts.push(timeout); 
   }
-  /*
-  updateBoost() {
-    this.#boost++;
-    setTimeout(() => {
-      if (this.#boost > 0) {
-        this.#boost--;
-      }
-    }, 6500); //BUG #02
-  }
-  */
   checkBoost(){
     switch (true) {
       case this.#boost < 5:
