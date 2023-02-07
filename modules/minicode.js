@@ -49,8 +49,6 @@ export default class MiniCode {
 
   constructor(root) {
     this.#root = root;
-
-    //addButton
     
     const para = document.createElement("p")
     para.textContent = "Atualmente não tenho nenhum projeto para apresentar mas estou trabalhando nisso. Espere aí... talvez você possa me ajudar. Que tal pôr a mão no meu código??"
@@ -92,7 +90,7 @@ export default class MiniCode {
     this.#boostMulti = 1;
     this.#bugsLvl = { lvl: 0, prevLvl: 0, nextLvl: 1000 };
     this.#bugsON = { start: false, end: false };
-    this.#bugsSaveNormal = { coding: 0, prevLvl: 0, nextLvl: 100 };
+    this.#bugsSaveNormal = { prevLvl: 0, nextLvl: 100 };
     this.#bugsCount = [];
     this.#preventPenalties = false;
     this.#boostTimeouts = []
@@ -104,8 +102,7 @@ export default class MiniCode {
     this.#spritePen = 0;
     this.#spriteRestart = 0;
     this.#negativeAnim = false;
-
-    //this.updateBars();
+    
     this.setKey(" ");
     this.setDecreaseInter(500);
     this.setBugsTimeout(10, 16);
@@ -134,9 +131,6 @@ export default class MiniCode {
       this.#canvas.height = 200;
       this.animation();
     }
-
-    
-    
   }
   gameOver() {
     clearInterval(this.#decreaseInterval);
@@ -223,7 +217,6 @@ export default class MiniCode {
   }
 
   keyHandler(event) {
-    //console.log("hy")
     if (event.key === " ") {
       event.preventDefault();
     }
@@ -243,7 +236,7 @@ export default class MiniCode {
   }
   updateBoost() {
     this.#boost++;
-    const timeout = setTimeout(() => this.#boost --, 6500); //BUG #02 [SOLVED]
+    const timeout = setTimeout(() => this.#boost --, 6500);
     this.#boostTimeouts.push(timeout); 
   }
   checkBoost(){
@@ -281,7 +274,7 @@ export default class MiniCode {
       default:
         this.#boostMulti = 6.0;
         break;
-    } //BUG #03 [SOLVED]
+    }
   }
   updatePoints() {
     const aux = this.#clicks % 10;
@@ -435,7 +428,6 @@ export default class MiniCode {
   }
 
   itsBugsTime() {
-    //MUDAR VISUAL
     const keys = [
       "A",
       "B",
@@ -475,16 +467,12 @@ export default class MiniCode {
       end: true,
     };
     this.#bugsCount = [];
-
-    /*const showBugs = document.createElement("p");
-    showBugs.textContent = `BUG TIME: Aperte o botao ${newKey}`;
-    this.#root.appendChild(showBugs); */ //BUG #04 [SOLVED]
   }
   itsBugsLvl() {
     this.#bugsSaveNormal = {
       prevLvl: this.#lvl.prevLvl,
       nextLvl: this.#lvl.nextLvl,
-    }; // coding: this.#coding  BUG #05 [SOLVED]
+    };
     this.#lvl.prevLvl = this.#bugsLvl.prevLvl;
     this.#lvl.nextLvl = this.#bugsLvl.nextLvl;
     this.#coding = this.#lvl.nextLvl / 4;
@@ -525,7 +513,6 @@ export default class MiniCode {
     console.log(this.#bugsLvl);
   }
   itsNotBugsTime() {
-    //MUDAR VISUAL
     this.setKey(" ");
     this.setBugsTimeout(10, 16);
     this.#pointsMulti = 1;
@@ -535,21 +522,9 @@ export default class MiniCode {
     this.#coding = this.#bugsSaveNormal.nextLvl;
     this.#lvl.prevLvl = this.#bugsSaveNormal.prevLvl;
     this.#lvl.nextLvl = this.#bugsSaveNormal.nextLvl;
-
-    // this.#root.removeChild(this.#root.lastChild); //BUG #04 [SOLVED]
   }
 
-  //ANIMATIONS
-
   animation() {
-    /*
-    function reset(){}
-    this.drawDesk()
-    this.drawLorem();
-    this.drawEffects()
-    this.updateBars(); // this.drawBars
-    this.drawToPress(); 
-    */
     if (this.#controlFR === 60) {
       this.#controlFR = 0;
     } else {
@@ -579,7 +554,6 @@ export default class MiniCode {
         let randX = this.random(-10,10)
         let randY = this.random(-10,10)
         this.#ctx.translate(randX,randY)
-        //console.log(randX,randY)
       }
       
       this.#ctx.clearRect(0, 0, this.#canvas.width, this.#canvas.height);
@@ -634,7 +608,6 @@ export default class MiniCode {
     }
     function drawBars() {
       this.#ctx.save()
-      
       
       //CODING
       const diference = this.#lvl.nextLvl - this.#lvl.prevLvl;
@@ -705,7 +678,6 @@ export default class MiniCode {
       }
     }
     function drawPenalties() {
-      //this.#ctx.fillRect(470,5,20,20)
       if(this.#penalties === 1){
         this.#ctx.save()
         this.#ctx.translate(470,5)
