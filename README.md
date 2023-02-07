@@ -2,7 +2,7 @@
 
 You can also [read this in english](#minicode-1)
 
-Site: https://islan42.github.io/minicode/
+Web-page: https://islan42.github.io/minicode/
 
 ## SOBRE O JOGO
 
@@ -44,7 +44,7 @@ A primeira coisa a se notar é que você deve pressionar um novo botão (escolhi
 
 Você pode [ler isto em pt-br](#minicode)
 
-Site: https://islan42.github.io/minicode/
+Web-page: https://islan42.github.io/minicode/
 
 ## ABOUT
 
