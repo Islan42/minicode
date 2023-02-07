@@ -2,12 +2,6 @@ export default class MiniCode {
   #root;
   
   #gameOn;
-  #intBar;
-  #lvlBar;
-  #pointsBar; 
-  #penaltiesBar;
-  #boostBar;
-  #prevNextBar;
 
   #coding;
   #lvl; 
@@ -108,22 +102,10 @@ export default class MiniCode {
     this.setBugsTimeout(10, 16);
     
     if (!this.#canvas) {
-      this.#intBar = document.createElement("p");
-      this.#lvlBar = document.createElement("p");
-      this.#pointsBar = document.createElement("p");
-      this.#penaltiesBar = document.createElement("p");
-      this.#boostBar = document.createElement("p");
-      this.#prevNextBar = document.createElement("p");
       this.#canvas = document.createElement("canvas");
       while (this.#root.firstChild) {
         this.#root.removeChild(this.#root.firstChild);
       }
-      this.#root.appendChild(this.#intBar);
-      this.#root.appendChild(this.#lvlBar);
-      this.#root.appendChild(this.#pointsBar);
-      this.#root.appendChild(this.#penaltiesBar);
-      this.#root.appendChild(this.#boostBar);
-      this.#root.appendChild(this.#prevNextBar);
       this.#root.appendChild(this.#canvas);
       
       this.#ctx = this.#canvas.getContext("2d");
@@ -159,31 +141,7 @@ export default class MiniCode {
       }
     }
   }
-
-  updateBars() {
-    if (
-      this.#intBar &&
-      this.#lvlBar &&
-      this.#pointsBar &&
-      this.#penaltiesBar &&
-      this.#boostBar &&
-      this.#prevNextBar
-    ) {
-      this.#intBar.textContent = `NIVEL DE INTENSIDADE: ${this.#coding}`;
-      this.#lvlBar.textContent = this.#bugsON.end
-        ? `BUGS LVL: ${this.#bugsLvl.lvl - 1}`
-        : `LVL: ${this.#lvl.lvl}`;
-      this.#pointsBar.textContent = `PTS: ${this.#score}`;
-      this.#penaltiesBar.textContent = `PENALTIES: ${this.#penalties}`;
-      this.#boostBar.textContent = `BOOST: ${
-        this.#pointsMulti
-      } x ${this.#boostMulti.toFixed(1)}: ${this.#boost} `;
-      this.#prevNextBar.textContent = `PREV: ${this.#lvl.prevLvl} NEXT: ${
-        this.#lvl.nextLvl
-      }`;
-    }
-  }
-
+  
   setKey(key) {
     if (this.#keytopress) {
       document.removeEventListener("keydown", this.#keyHandlerBind);
@@ -533,7 +491,6 @@ export default class MiniCode {
     
     if(this.#gameOn) {
       this.checkBoost();
-      this.updateBars();
       drawDesk.call(this);
       drawLorem.call(this);
       drawBars.call(this);
