@@ -662,7 +662,7 @@ export default class MiniCode {
           for (let i = 0; i < this.#bugsCount.length; i ++) {
             const rads = this.random(0, Math.PI * 2)
             const sprite = this.random(0,4)
-            const size = this.random (5,42)
+            const size = this.random (15,42)
             const posX = this.random(0, this.#canvas.width - size/2)
             const posY = this.random(0, this.#canvas.height - size/2)
             
@@ -676,7 +676,7 @@ export default class MiniCode {
         const posY = this.random(0, this.#canvas.height)
         const rads = this.random(0, Math.PI * 2)
         const sprite = this.random(0,4)
-        const size = this.random (5,42)
+        const size = this.random (15,42)
         
         const newBug = { posX, posY, rads, sprite, size }
         this.#bugsCount.push(newBug)
