@@ -14,9 +14,14 @@ h1 {
   text-align: center;
 }
 
+#game-panel {
+  position: relative;
+}
+
 #game-panel canvas {
   display: block;
   margin: 0 auto;
+  max-width: 500px;
 }
 
 footer a, footer a:link, footer a:visited {

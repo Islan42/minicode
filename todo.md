@@ -3,6 +3,8 @@
   - [ ] Remover `console.log()`
   - [ ] Adicionar favicon
   - [ ] Canvas responsivo (?)
+  - [ ] Fazer o BugsTime mais aleatório
+  - [ ] Portabilidade para celulares
 
   ## MELHORIAS
 

@@ -173,6 +173,11 @@ export default class MiniCode {
   random(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
+  setRandomKey() {
+    const keys = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",];
+    const newKey = keys[this.random(0, 25)];
+    this.setKey(newKey);
+  }
 
   keyHandler(event) {
     if (event.key === " ") {
@@ -185,6 +190,9 @@ export default class MiniCode {
         this.positiveCoding(this.#codepower);
         this.updateBoost();
         this.updatePoints();
+        if (this.#bugsON.end) {
+          this.setRandomKey()
+        }
       } else {
         this.negativeCoding(Math.floor(this.#codepower * 0.9));
         this.#negativeAnim = true;
@@ -386,37 +394,8 @@ export default class MiniCode {
   }
 
   itsBugsTime() {
-    const keys = [
-      "A",
-      "B",
-      "C",
-      "D",
-      "E",
-      "F",
-      "G",
-      "H",
-      "I",
-      "J",
-      "K",
-      "L",
-      "M",
-      "N",
-      "O",
-      "P",
-      "Q",
-      "R",
-      "S",
-      "T",
-      "U",
-      "V",
-      "W",
-      "X",
-      "Y",
-      "Z",
-    ];
-    const newKey = keys[this.random(0, 25)];
-    this.setKey(newKey);
-    this.#pointsMulti = 2;
+    this.setRandomKey()
+    this.#pointsMulti = 5;
     this.#penalties = 1;
     this.#preventPenalties = false;
     this.#spritePen = 0;
@@ -441,28 +420,28 @@ export default class MiniCode {
 
     switch (true) {
       case lvl === 0:
-        newFatigue = 15;
-        newDecInter = 200;
+        newFatigue = 7;
+        newDecInter = 500;
         nextNextLvl = 1200;
         break;
       case lvl === 1:
-        newFatigue = 15;
-        newDecInter = 200;
+        newFatigue = 8;
+        newDecInter = 450;
         nextNextLvl = 1400;
         break;
       case lvl === 2:
-        newFatigue = 20;
-        newDecInter = 150;
+        newFatigue = 9;
+        newDecInter = 350;
         nextNextLvl = 1600;
         break;
       case lvl === 3:
-        newFatigue = 25;
-        newDecInter = 100;
+        newFatigue = 10;
+        newDecInter = 300;
         nextNextLvl = 1800;
         break;
       default:
-        newFatigue = 45;
-        newDecInter = 100;
+        newFatigue = 13;
+        newDecInter = 200;
         nextNextLvl = 2000;
     }
     this.setDecreaseInter(newDecInter);
@@ -589,7 +568,7 @@ export default class MiniCode {
 
       //BOOST
       const boostText =
-        this.#pointsMulti === 2
+        this.#bugsON.end
           ? `${this.#pointsMulti}x ${this.#boostMulti.toFixed(1)}`
           : `${this.#boostMulti.toFixed(1)}`;
       this.#ctx.fillText(boostText, 5, 100);
