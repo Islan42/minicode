@@ -4,7 +4,7 @@
   - [ ] Adicionar favicon
   - [ ] Canvas responsivo (?)
   - [X] Fazer o BugsTime mais aleatório
-  - [ ] Portabilidade para celulares
+  - [X] Portabilidade para celulares
 
   ## MELHORIAS
 

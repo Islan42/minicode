@@ -162,18 +162,23 @@ export default class MiniCode {
   }
   
   setPivot(pos){
-    const aux = (this.#root.clientWidth - this.#canvas.width)/2
+    let aux = (this.#root.clientWidth - this.#canvas.width)/2
+    if (aux < 0) {
+      aux = 0
+    }
+    console.log(this.#root.clientWidth)
     if (pos === "initial") {
       const mid = this.#canvas.width / 2 - 25
       this.#pivot.style.top = "140px"
       this.#pivot.style.left = `${aux + mid}px`
     } else {
-      //console.log(aux)
+      console.log(aux)
       const width = this.#canvas.width
       const randX = this.random(0, width - 50)
       const randY = this.random(0, 200 - 50)
       this.#pivot.style.top = `${randY}px`
       this.#pivot.style.left = `${aux + randX}px`
+      console.log(aux + randX)
     }
   }
   setClick() {
