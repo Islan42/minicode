@@ -3,7 +3,7 @@
   - [ ] Remover `console.log()`
   - [ ] Adicionar favicon
   - [ ] Canvas responsivo (?)
-  - [ ] Fazer o BugsTime mais aleatório
+  - [X] Fazer o BugsTime mais aleatório
   - [ ] Portabilidade para celulares
 
   ## MELHORIAS
@@ -12,7 +12,7 @@
 
   ## BUGS CONHECIDOS
 
-    - BUG #06: 
+    - [X] BUG #06: Pressionar o botão incorreto contribui para a pontuação. Isso não deveria acontecer! [SOLVED]
 
   ## TESTAR
 

@@ -39,22 +39,37 @@ export default class MiniCode {
   #spritePen;
   #spriteRestart;
   #assets;
-  #negativeAnim
+  #negativeAnim;
+  
+  #pivot;
+  #desktop;
+  #clickHandlerBind
+  
+  #idRAF
 
-  constructor(root) {
+  constructor(root, desktop) {
     this.#root = root;
+    this.#desktop = desktop;
     
-    const para = document.createElement("p")
-    para.textContent = "Atualmente não tenho nenhum projeto para apresentar mas estou trabalhando nisso. Espere aí... talvez você possa me ajudar. Que tal pôr a mão no meu código??"
-    const startBtn = document.createElement("button");
-    startBtn.textContent = "LA ELE";
-    startBtn.addEventListener("click", this.gameStart.bind(this), {
-      once: true,
-    });
+    while (this.#root.firstChild) {
+      this.#root.removeChild(this.#root.firstChild);
+    }
     
-    this.#root.appendChild(para)
-    this.#root.appendChild(startBtn);
-
+    if (!this.#desktop) {
+      this.#pivot = document.createElement("div")
+      this.#root.appendChild(this.#pivot);
+      
+      this.#pivot.id = "pivot"
+    }
+    if (!this.#canvas) {
+      this.#canvas = document.createElement("canvas");
+      this.#root.appendChild(this.#canvas);
+      
+      this.#ctx = this.#canvas.getContext("2d");
+      this.#canvas.width = 500;
+      this.#canvas.height = 200;
+    }
+    
     const lorem = new Image();
     lorem.src = "assets/lorem.png"
     const desk = new Image();
@@ -68,9 +83,13 @@ export default class MiniCode {
     const bugs = new Image()
     bugs.src = "assets/bugs.png"
     this.#assets = { lorem, desk, key, spacebar, penalties, bugs };
+    
+    this.gameStart()
+    this.animation();
   }
 
   gameStart() {
+    //console.log(this.#idRAF)
     this.#gameOn = true;
     this.#coding = 50;
     this.#lvl = { lvl: 0, prevLvl: 0, nextLvl: 100, maxLvl: 0 };
@@ -88,6 +107,7 @@ export default class MiniCode {
     this.#bugsCount = [];
     this.#preventPenalties = false;
     this.#boostTimeouts = []
+    this.#clickHandlerBind = this.clickHandler.bind(this);
     this.#keyHandlerBind = this.keyHandler.bind(this);
     this.#callGameStartBind = this.callGameStart.bind(this);
     this.#controlFR = 0;
@@ -97,26 +117,25 @@ export default class MiniCode {
     this.#spriteRestart = 0;
     this.#negativeAnim = false;
     
-    this.setKey(" ");
+    if (this.#desktop) {
+      this.setKey(" ");
+    } else {
+      this.setPivot("initial")
+      this.setClick()
+    }
+    
+    //this.setClick()
+    //this.setKey(" ");
     this.setDecreaseInter(500);
     this.setBugsTimeout(10, 16);
-    
-    if (!this.#canvas) {
-      this.#canvas = document.createElement("canvas");
-      while (this.#root.firstChild) {
-        this.#root.removeChild(this.#root.firstChild);
-      }
-      this.#root.appendChild(this.#canvas);
-      
-      this.#ctx = this.#canvas.getContext("2d");
-      this.#canvas.width = 500;
-      this.#canvas.height = 200;
-      this.animation();
-    }
   }
   gameOver() {
+    if (this.#desktop) {
+      document.removeEventListener("keydown", this.#keyHandlerBind);
+    } else {
+      this.#root.removeEventListener("click", this.#clickHandlerBind)
+    }
     clearInterval(this.#decreaseInterval);
-    document.removeEventListener("keydown", this.#keyHandlerBind);
     clearTimeout(this.#bugsTimeout);
     for (let timeout of this.#boostTimeouts){
       clearTimeout(timeout)
@@ -142,6 +161,26 @@ export default class MiniCode {
     }
   }
   
+  setPivot(pos){
+    const aux = (this.#root.clientWidth - this.#canvas.width)/2
+    if (pos === "initial") {
+      const mid = this.#canvas.width / 2 - 25
+      this.#pivot.style.top = "140px"
+      this.#pivot.style.left = `${aux + mid}px`
+    } else {
+      //console.log(aux)
+      const width = this.#canvas.width
+      const randX = this.random(0, width - 50)
+      const randY = this.random(0, 200 - 50)
+      this.#pivot.style.top = `${randY}px`
+      this.#pivot.style.left = `${aux + randX}px`
+    }
+  }
+  setClick() {
+    if (this.#pivot){
+      this.#root.addEventListener("click", this.#clickHandlerBind)
+    }
+  }
   setKey(key) {
     if (this.#keytopress) {
       document.removeEventListener("keydown", this.#keyHandlerBind);
@@ -174,19 +213,35 @@ export default class MiniCode {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
   setRandomKey() {
-    const keys = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",];
+    const keys = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
     const newKey = keys[this.random(0, 25)];
     this.setKey(newKey);
   }
 
+  clickHandler(event) {
+    if (event.target === this.#pivot) {
+      console.log("1")
+      this.#clicks++; // BUG #06 [SOLVED]
+      this.positiveCoding(this.#codepower);
+      this.updateBoost();
+      this.updatePoints();
+      if (this.#bugsON.end) {
+        this.setPivot("random")
+      }
+    } else {
+      this.negativeCoding(Math.floor(this.#codepower * 0.9));
+        this.#negativeAnim = true;
+        setTimeout(() => this.#negativeAnim = false, 500)
+    }
+  }
   keyHandler(event) {
     if (event.key === " ") {
       event.preventDefault();
     }
     if (!event.repeat) {
-      this.#clicks++;
       const match = event.key.toLowerCase() === this.#keytopress.toLowerCase();
       if (match) {
+        this.#clicks++; // BUG #06 [SOLVED]
         this.positiveCoding(this.#codepower);
         this.updateBoost();
         this.updatePoints();
@@ -393,8 +448,12 @@ export default class MiniCode {
     this.setDecreaseInter(newDecInter);
   }
 
-  itsBugsTime() {
-    this.setRandomKey()
+  itsBugsTime() { 
+    if (this.#desktop) {
+      this.setRandomKey() //CLICK
+    } else {
+      this.setPivot("random")
+    }
     this.#pointsMulti = 5;
     this.#penalties = 1;
     this.#preventPenalties = false;
@@ -450,7 +509,11 @@ export default class MiniCode {
     console.log(this.#bugsLvl);
   }
   itsNotBugsTime() {
-    this.setKey(" ");
+    if (this.#desktop) {
+      this.setKey(" "); //CLICK
+    } else {
+      this.setPivot("initial")
+    }
     this.setBugsTimeout(10, 16);
     this.#pointsMulti = 1;
     this.#penalties = 0;
@@ -473,7 +536,9 @@ export default class MiniCode {
       drawDesk.call(this);
       drawLorem.call(this);
       drawBars.call(this);
-      drawToPress.call(this);
+      if (this.#desktop) {
+        drawToPress.call(this); //CLICK
+      }
       drawPenalties.call(this);
       if (this.#bugsON.end) {
         drawBugs.call(this)
@@ -482,7 +547,7 @@ export default class MiniCode {
       drawGameOver.call(this)
     }
     
-    requestAnimationFrame(this.animation.bind(this))
+    this.#idRAF = requestAnimationFrame(this.animation.bind(this))
 
     function drawDesk() {
       this.#ctx.save() // SAVE #01: DESK
@@ -662,6 +727,7 @@ export default class MiniCode {
       }
     }
     function drawGameOver() {
+      //console.log(this.#idRAF)
       const ctx = this.#ctx;
       ctx.fillStyle = "rgba(0,0,0,0.7)";
       ctx.fillRect(0, 0, this.#canvas.width, this.#canvas.height);
@@ -699,5 +765,14 @@ export default class MiniCode {
       ctx.fillText(`RESTART`, posRestartX + 3 * this.#spriteRestart, 155 - 3 * this.#spriteRestart);
       ctx.restore();
     }
+  }
+  
+  deleteThis(){
+    this.gameOver()
+    this.#canvas.removeEventListener("click", this.#callGameStartBind)
+    document.removeEventListener("keydown", this.#callGameStartBind)
+    cancelAnimationFrame(this.#idRAF)
+    
+    console.log("oll")
   }
 }
