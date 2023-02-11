@@ -14,9 +14,21 @@ h1 {
   text-align: center;
 }
 
+#game-panel {
+  position: relative;
+}
+
 #game-panel canvas {
   display: block;
   margin: 0 auto;
+  max-width: 500px;
+}
+
+#game-panel #pivot {
+  width: 50px;
+  height: 50px;
+  background-color: rgba(255,0,0,0.5);
+  position: absolute;
 }
 
 footer a, footer a:link, footer a:visited {
