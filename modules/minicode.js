@@ -127,7 +127,7 @@ export default class MiniCode {
     //this.setClick()
     //this.setKey(" ");
     this.setDecreaseInter(500);
-    this.setBugsTimeout(1, 3); // 10, 16
+    this.setBugsTimeout(10, 16);
   }
   gameOver() {
     if (this.#desktop) {
