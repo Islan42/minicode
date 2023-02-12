@@ -797,13 +797,13 @@ export default class MiniCode {
 
       ctx.save();
       ctx.fillStyle = "rgb(220,0,0)";
-      let font = width < 400 ? 28 : 30
+      let font = width/(500/30)
       ctx.font = `bold ${font}px sans-serif`;
       const measureGOX = ctx.measureText("GAME OVER");
       const posGOX = width/2 - measureGOX.width/2;
       
       ctx.fillText("GAME OVER", posGOX, width/(500/80));
-      font = width < 400 ? 16 : 18
+      font = width/(500/18)
       ctx.font = `bold ${font}px sans-serif`;
       const measureLvlX = ctx.measureText(`LVL: ${this.#lvl.maxLvl}`);
       const posLvlX = width/2 - measureLvlX.width/2;
