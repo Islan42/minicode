@@ -127,7 +127,7 @@ export default class MiniCode {
     //this.setClick()
     //this.setKey(" ");
     this.setDecreaseInter(500);
-    this.setBugsTimeout(10, 16);
+    this.setBugsTimeout(1, 3); // 10, 16
   }
   gameOver() {
     if (this.#desktop) {
@@ -251,7 +251,7 @@ export default class MiniCode {
         this.setPivot("random")
       }
     } else {
-      this.negativeCoding(Math.floor(this.#codepower * 0.9));
+      this.negativeCoding(Math.floor(this.#codepower * 0.6));
         this.#negativeAnim = true;
         setTimeout(() => this.#negativeAnim = false, 500)
     }
@@ -271,7 +271,7 @@ export default class MiniCode {
           this.setRandomKey()
         }
       } else {
-        this.negativeCoding(Math.floor(this.#codepower * 0.9));
+        this.negativeCoding(Math.floor(this.#codepower * 0.6));
         this.#negativeAnim = true;
         setTimeout(() => this.#negativeAnim = false, 500)
       }
@@ -493,7 +493,7 @@ export default class MiniCode {
     };
     this.#lvl.prevLvl = this.#bugsLvl.prevLvl;
     this.#lvl.nextLvl = this.#bugsLvl.nextLvl;
-    this.#coding = this.#lvl.nextLvl / 4;
+    this.#coding = this.#lvl.nextLvl * (4/10);
     let lvl = this.#bugsLvl.lvl;
     let newFatigue;
     let newDecInter;
