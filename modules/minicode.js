@@ -71,10 +71,11 @@ export default class MiniCode {
       this.setCanvasArea()
     }
     
+    const aux = this.random(1,2)
     const lorem = new Image();
     lorem.src = "assets/lorem.png"
     const desk = new Image();
-    desk.src = "assets/desk.png"
+    desk.src = `assets/desk${aux}.png`
     const key = new Image();
     key.src = "assets/key.png"
     const spacebar = new Image();
@@ -392,7 +393,7 @@ export default class MiniCode {
       case this.#lvl.lvl < 5: 
         skip = 200; // 6 clicks + 2 = 8     // 6+2 = 8
         newFatigue = 15;
-        newDecInter = 300;
+        newDecInter = 250;
         newCodePower = 30;
         bugsParam = {min: 10, max: 16}
         break;
@@ -405,22 +406,22 @@ export default class MiniCode {
         break;
       case this.#lvl.lvl < 15:
         skip = 600; // 14 clicks + 12 = 26  // 14+6 = 20
-        newFatigue = 22;
+        newFatigue = 21;
         newDecInter = 200;
         newCodePower = 45;
         bugsParam = {min: 14, max: 22}
         break;
       case this.#lvl.lvl < 20:
         skip = 1000; // 20 + 18 = 38        // 20+12 = 32
-        newFatigue = 25;
-        newDecInter = 150;
+        newFatigue = 24;
+        newDecInter = 200;
         newCodePower = 50;
         bugsParam = {min: 18, max: 28}
         break;
       default:
         skip = 1500; // 28 + 27 = 55        // 28 + 27 = 55
-        newFatigue = 30;
-        newDecInter = 100;
+        newFatigue = 27;
+        newDecInter = 150;
         newCodePower = 55;
         bugsParam = {min: 20, max: 32}
     }
@@ -448,7 +449,7 @@ export default class MiniCode {
       case this.#lvl.lvl < 5:
         skip = 200;
         newFatigue = 15;
-        newDecInter = 300;
+        newDecInter = 250;
         newCodePower = 30;
         bugsParam = {min: 10, max: 16}
         break;
@@ -461,22 +462,22 @@ export default class MiniCode {
         break;
       case this.#lvl.lvl < 15:
         skip = 600;
-        newFatigue = 22;
+        newFatigue = 21;
         newDecInter = 200;
         newCodePower = 45;
         bugsParam = {min: 14, max: 22}
         break;
       case this.#lvl.lvl < 20:
         skip = 1000;
-        newFatigue = 25;
-        newDecInter = 150;
+        newFatigue = 24;
+        newDecInter = 200;
         newCodePower = 50;
         bugsParam = {min: 18, max: 28}
         break;
       default:
         skip = 1500;
-        newFatigue = 30;
-        newDecInter = 100;
+        newFatigue = 27;
+        newDecInter = 150;
         newCodePower = 55;
         bugsParam = {min: 20, max: 32}
     }
@@ -615,9 +616,9 @@ export default class MiniCode {
       this.#ctx.drawImage(
         this.#assets.lorem,
         0,
-        21 * this.#spriteLorem,
+        21 * this.#spriteLorem + 1,
         200,
-        84,
+        83,
         dX,
         dY,
         dWidth,
