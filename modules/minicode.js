@@ -45,7 +45,7 @@ export default class MiniCode {
   #pivot;
   #desktop;
   #clickHandlerBind
-  #cacheCanvasWidth
+  #cacheRootWidth
   
   #idRAF
 
@@ -91,7 +91,6 @@ export default class MiniCode {
   }
 
   gameStart() {
-    //console.log(this.#idRAF)
     this.#gameOn = true;
     this.#coding = 50;
     this.#lvl = { lvl: 0, prevLvl: 0, nextLvl: 100, maxLvl: 0 };
@@ -127,8 +126,6 @@ export default class MiniCode {
       this.setClick()
     }
     
-    //this.setClick()
-    //this.setKey(" ");
     this.setDecreaseInter(500);
     this.setBugsTimeout(this.#bugsTimeoutParam.min, this.#bugsTimeoutParam.max);
   }
@@ -165,7 +162,6 @@ export default class MiniCode {
   }
   
   setCanvasArea() {
-    this.#cacheCanvasWidth = this.#canvas.width
     if (this.#root.clientWidth > 500) {
       this.#canvas.width = 500;
     } else {
@@ -174,10 +170,11 @@ export default class MiniCode {
     const b = this.#canvas.width/2.5
     this.#canvas.height = b;
     
-    if (this.#cacheCanvasWidth !== this.#canvas.width && this.#bugsON) {
+    if (this.#cacheRootWidth !== this.#root.clientWidth && this.#bugsON) {
       const pos = this.#bugsON.end ? "random" : "initial"
       this.setPivot(pos)
     }
+    this.#cacheRootWidth = this.#root.clientWidth
   }
   setPivot(pos){
     let aux = (this.#root.clientWidth - this.#canvas.width)/2
@@ -186,19 +183,15 @@ export default class MiniCode {
     }
     const width = this.#canvas.width
     const height = this.#canvas.height
-    console.log(this.#root.clientWidth)
     if (pos === "initial") {
       const mid = this.#canvas.width / 2 - 25
       this.#pivot.style.top = `${height - 50}px`
       this.#pivot.style.left = `${aux + mid}px`
     } else {
-      console.log(aux)
-      
       const randX = this.random(0, width - 50)
       const randY = this.random(0, height - 50)
       this.#pivot.style.top = `${randY}px`
       this.#pivot.style.left = `${aux + randX}px`
-      console.log(aux + randX)
     }
   }
   setClick() {
@@ -227,11 +220,9 @@ export default class MiniCode {
     this.#bugsTimeout = setTimeout(
       () => {
         this.#bugsON.start = true
-        console.log("OK")
       },
       time * 1000
     );
-    console.log(time);
   }
 
   random(min, max) {
@@ -245,8 +236,7 @@ export default class MiniCode {
 
   clickHandler(event) {
     if (event.target === this.#pivot) {
-      console.log("1")
-      this.#clicks++; // BUG #06 [SOLVED]
+      this.#clicks++;
       this.positiveCoding(this.#codepower);
       this.updateBoost();
       this.updatePoints();
@@ -266,7 +256,7 @@ export default class MiniCode {
     if (!event.repeat) {
       const match = event.key.toLowerCase() === this.#keytopress.toLowerCase();
       if (match) {
-        this.#clicks++; // BUG #06 [SOLVED]
+        this.#clicks++;
         this.positiveCoding(this.#codepower);
         this.updateBoost();
         this.updatePoints();
@@ -305,16 +295,16 @@ export default class MiniCode {
       case this.#boost < 30:
         this.#boostMulti = 3.5;
         break;
-      case this.#boost < 35: //5 c/s
+      case this.#boost < 35:
         this.#boostMulti = 4.0;
         break;
-      case this.#boost < 40: //5.7 c/s
+      case this.#boost < 40:
         this.#boostMulti = 4.5;
         break;
-      case this.#boost < 45: //6.42 c/s
+      case this.#boost < 45:
         this.#boostMulti = 5.0;
         break;
-      case this.#boost < 50: //7.14 c/s
+      case this.#boost < 50:
         this.#boostMulti = 5.5;
         break;
       default:
@@ -387,39 +377,39 @@ export default class MiniCode {
     let skip;
     let newFatigue;
     let newDecInter;
-    let newCodePower;  //5.7 c/s
+    let newCodePower;  
     let bugsParam = {}
     switch (true) {
       case this.#lvl.lvl < 5: 
-        skip = 200; // 6 clicks + 2 = 8     // 6+2 = 8
+        skip = 200;
         newFatigue = 15;
         newDecInter = 250;
         newCodePower = 30;
         bugsParam = {min: 10, max: 16}
         break;
       case this.#lvl.lvl < 10: 
-        skip = 400; // 10 clicks + 4 = 14   // 10+4 = 14
+        skip = 400;
         newFatigue = 18;
         newDecInter = 250;
         newCodePower = 40;
         bugsParam = {min: 12, max: 18}
         break;
       case this.#lvl.lvl < 15:
-        skip = 600; // 14 clicks + 12 = 26  // 14+6 = 20
+        skip = 600;
         newFatigue = 21;
         newDecInter = 200;
         newCodePower = 45;
         bugsParam = {min: 14, max: 22}
         break;
       case this.#lvl.lvl < 20:
-        skip = 1000; // 20 + 18 = 38        // 20+12 = 32
+        skip = 1000;
         newFatigue = 24;
         newDecInter = 200;
         newCodePower = 50;
         bugsParam = {min: 18, max: 28}
         break;
       default:
-        skip = 1500; // 28 + 27 = 55        // 28 + 27 = 55
+        skip = 1500;
         newFatigue = 27;
         newDecInter = 150;
         newCodePower = 55;
@@ -490,7 +480,7 @@ export default class MiniCode {
 
   itsBugsTime() { 
     if (this.#desktop) {
-      this.setRandomKey() //CLICK
+      this.setRandomKey()
     } else {
       this.setPivot("random")
     }
@@ -546,11 +536,10 @@ export default class MiniCode {
     this.setDecreaseInter(newDecInter);
     this.#fatiguepower = newFatigue;
     this.#bugsLvl = { lvl: ++lvl, prevLvl: 0, nextLvl: nextNextLvl };
-    console.log(this.#bugsLvl);
   }
   itsNotBugsTime() {
     if (this.#desktop) {
-      this.setKey(" "); //CLICK
+      this.setKey(" ");
     } else {
       this.setPivot("initial")
     }
@@ -579,7 +568,7 @@ export default class MiniCode {
       drawLorem.call(this);
       drawBars.call(this);
       if (this.#desktop) {
-        drawToPress.call(this); //CLICK
+        drawToPress.call(this);
       }
       drawPenalties.call(this);
       if (this.#bugsON.end) {
@@ -796,7 +785,6 @@ export default class MiniCode {
       }
     }
     function drawGameOver() {
-      //console.log(this.#idRAF)
       const width = this.#canvas.width
       const ctx = this.#ctx;
       ctx.fillStyle = "rgba(0,0,0,0.7)";
@@ -849,7 +837,5 @@ export default class MiniCode {
     this.#canvas.removeEventListener("click", this.#callGameStartBind)
     document.removeEventListener("keydown", this.#callGameStartBind)
     cancelAnimationFrame(this.#idRAF)
-    
-    console.log("oll")
   }
 }

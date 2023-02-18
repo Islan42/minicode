@@ -1,6 +1,6 @@
 # AFAZERES
 
-  - [ ] Remover `console.log()`
+  - [X] Remover `console.log()`
   - [X] Adicionar favicon
   - [X] Canvas responsivo (?)
   - [X] Fazer o BugsTime mais aleatório
