@@ -59,3 +59,4 @@
     
     width/font = x
     
+    C = c/s * s + 

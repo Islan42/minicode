@@ -26,6 +26,7 @@ export default class MiniCode {
 
   #bugsLvl;
   #bugsTimeout;
+  #bugsTimeoutParam;
   #bugsON;
   #bugsSaveNormal;
   #bugsCount;
@@ -102,6 +103,7 @@ export default class MiniCode {
     this.#pointsMulti = 1;
     this.#boostMulti = 1;
     this.#bugsLvl = { lvl: 0, prevLvl: 0, nextLvl: 1000 };
+    this.#bugsTimeoutParam = { min: 10, max: 16 }
     this.#bugsON = { start: false, end: false };
     this.#bugsSaveNormal = { prevLvl: 0, nextLvl: 100 };
     this.#bugsCount = [];
@@ -127,7 +129,7 @@ export default class MiniCode {
     //this.setClick()
     //this.setKey(" ");
     this.setDecreaseInter(500);
-    this.setBugsTimeout(10, 16);
+    this.setBugsTimeout(this.#bugsTimeoutParam.min, this.#bugsTimeoutParam.max);
   }
   gameOver() {
     if (this.#desktop) {
@@ -279,7 +281,7 @@ export default class MiniCode {
   }
   updateBoost() {
     this.#boost++;
-    const timeout = setTimeout(() => this.#boost --, 6500);
+    const timeout = setTimeout(() => this.#boost --, 7000);
     this.#boostTimeouts.push(timeout); 
   }
   checkBoost(){
@@ -302,16 +304,16 @@ export default class MiniCode {
       case this.#boost < 30:
         this.#boostMulti = 3.5;
         break;
-      case this.#boost < 35:
+      case this.#boost < 35: //5 c/s
         this.#boostMulti = 4.0;
         break;
-      case this.#boost < 40:
+      case this.#boost < 40: //5.7 c/s
         this.#boostMulti = 4.5;
         break;
-      case this.#boost < 45:
+      case this.#boost < 45: //6.42 c/s
         this.#boostMulti = 5.0;
         break;
-      case this.#boost < 50:
+      case this.#boost < 50: //7.14 c/s
         this.#boostMulti = 5.5;
         break;
       default:
@@ -384,42 +386,49 @@ export default class MiniCode {
     let skip;
     let newFatigue;
     let newDecInter;
-    let newCodePower;
+    let newCodePower;  //5.7 c/s
+    let bugsParam = {}
     switch (true) {
-      case this.#lvl.lvl < 5:
-        skip = 200;
+      case this.#lvl.lvl < 5: 
+        skip = 200; // 6 clicks + 2 = 8     // 6+2 = 8
         newFatigue = 15;
         newDecInter = 300;
         newCodePower = 30;
+        bugsParam = {min: 10, max: 16}
         break;
-      case this.#lvl.lvl < 10:
-        skip = 400;
+      case this.#lvl.lvl < 10: 
+        skip = 400; // 10 clicks + 4 = 14   // 10+4 = 14
         newFatigue = 18;
-        newDecInter = 200;
+        newDecInter = 250;
         newCodePower = 40;
+        bugsParam = {min: 12, max: 18}
         break;
       case this.#lvl.lvl < 15:
-        skip = 600;
+        skip = 600; // 14 clicks + 12 = 26  // 14+6 = 20
         newFatigue = 22;
-        newDecInter = 100;
+        newDecInter = 200;
         newCodePower = 45;
+        bugsParam = {min: 14, max: 22}
         break;
       case this.#lvl.lvl < 20:
-        skip = 1000;
+        skip = 1000; // 20 + 18 = 38        // 20+12 = 32
         newFatigue = 25;
-        newDecInter = 100;
+        newDecInter = 150;
         newCodePower = 50;
+        bugsParam = {min: 18, max: 28}
         break;
       default:
-        skip = 1500;
+        skip = 1500; // 28 + 27 = 55        // 28 + 27 = 55
         newFatigue = 30;
         newDecInter = 100;
         newCodePower = 55;
+        bugsParam = {min: 20, max: 32}
     }
     this.#lvl.nextLvl += skip;
     this.#fatiguepower = newFatigue;
     this.#codepower = newCodePower;
     this.setDecreaseInter(newDecInter);
+    this.bugsTimeoutParam = bugsParam;
   }
   setPrevLvl() {
     this.#lvl.nextLvl = this.#lvl.prevLvl;
@@ -427,47 +436,55 @@ export default class MiniCode {
     let newFatigue;
     let newDecInter;
     let newCodePower;
+    let bugsParam = {}
     switch (true) {
       case this.#lvl.lvl === 0:
         skip = 100;
         newFatigue = 5;
         newDecInter = 500;
         newCodePower = 25;
+        bugsParam = {min: 10, max: 16}
         break;
       case this.#lvl.lvl < 5:
         skip = 200;
         newFatigue = 15;
-        newDecInter = 500;
+        newDecInter = 300;
         newCodePower = 30;
+        bugsParam = {min: 10, max: 16}
         break;
       case this.#lvl.lvl < 10:
         skip = 400;
         newFatigue = 18;
-        newDecInter = 300;
+        newDecInter = 250;
         newCodePower = 40;
+        bugsParam = {min: 12, max: 18}
         break;
       case this.#lvl.lvl < 15:
         skip = 600;
         newFatigue = 22;
         newDecInter = 200;
         newCodePower = 45;
+        bugsParam = {min: 14, max: 22}
         break;
       case this.#lvl.lvl < 20:
         skip = 1000;
         newFatigue = 25;
-        newDecInter = 100;
+        newDecInter = 150;
         newCodePower = 50;
+        bugsParam = {min: 18, max: 28}
         break;
       default:
         skip = 1500;
         newFatigue = 30;
         newDecInter = 100;
         newCodePower = 55;
+        bugsParam = {min: 20, max: 32}
     }
     this.#lvl.prevLvl -= skip;
     this.#fatiguepower = newFatigue;
     this.#codepower = newCodePower;
     this.setDecreaseInter(newDecInter);
+    this.bugsTimeoutParam = {}
   }
 
   itsBugsTime() { 
@@ -536,7 +553,7 @@ export default class MiniCode {
     } else {
       this.setPivot("initial")
     }
-    this.setBugsTimeout(10, 16);
+    this.setBugsTimeout(this.bugsTimeoutParam.min, this.bugsTimeoutParam.max);
     this.#pointsMulti = 1;
     this.#penalties = 0;
     this.#bugsON = { start: false, end: false };
