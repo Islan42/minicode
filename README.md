@@ -2,7 +2,7 @@
 
 You can also [read this in english](#minicode-1)
 
-Web-page: https://islan42.github.io/minicode/
+Web-page: [MiniCode](https://islan42.github.io/minicode/)
 
 ## SOBRE O JOGO
 
@@ -10,7 +10,7 @@ Minicode é um minijogo de apertar botão: você deve pressionar o botão especi
 
 Durante a criação do meu próprio web-portfólio, percebi que ele estava meio vazio já que eu não tinha construído nada muito relevante. Então pensei em construir um minigame, um projeto que não fosse muito complexo mas que pudesse quebrar o gelo e passar o tempo. Eu quase instantaneamente lembrei de um minigame que eu jogava quando criança: Em GTA SA é possível entrar numa academia e começar um minigame para levantar halteres, você pressiona um determinado botão repetidas vezes até completar uma barrinha e completar uma repetição.
 
-Com essa inspiração comecei a viajar na ideia e planejar os aspectos da gameplay que eu queria implementar. O que mais me animou, além dos desafios que eu teria que enfrentar (tackle) para implementar tais aspectos, foi como a metalinguagem se encaixava.
+Com essa inspiração comecei a viajar na ideia e planejar os aspectos da gameplay que eu queria implementar. O que mais me animou, além dos desafios que eu teria que enfrentar para implementar tais aspectos, foi como a metalinguagem se encaixava.
 
 Enfim, esse foi o resultado. Espero que gostem.
 
@@ -30,7 +30,7 @@ Outra coisa importante é manter o ritmo. Quanto maior a frequência de clicks m
 
 Após um bom tempo pressionando o mesmo botão você provavelmente está entediado, mas após um tempo determinado aleatoriamente, após subir de nível, terá que enfrentar a ***HORA DOS BUGS***.
 
-A primeira coisa a se notar é que você deve pressionar um novo botão (escolhido aleatoriamente). Também há dicas visuais para mostrar que você entrou na ***HORA DOS BUGS***, o *Boost* é dobrado e os *Penalties* são setados para 1. A boa notícia é que se você conseguir subir de nível, *Penalties* são resetados para 0, e você terá alcançado muitos pontos.
+A primeira coisa a se notar é que você deve pressionar um novo botão (escolhido aleatoriamente). Também há dicas visuais para mostrar que você entrou na ***HORA DOS BUGS***, o *Boost* é dobrado e os *Penalties* são definidos para 1. A boa notícia é que se você conseguir subir de nível, *Penalties* são redefinidos para 0, e você terá alcançado muitos pontos.
 
 ![É HORA DOS BUGS](assets/rdm_02.png)
 
@@ -44,7 +44,7 @@ A primeira coisa a se notar é que você deve pressionar um novo botão (escolhi
 
 Você pode [ler isto em pt-br](#minicode)
 
-Web-page: https://islan42.github.io/minicode/
+Web-page: [MiniCode](https://islan42.github.io/minicode/)
 
 ## ABOUT
 
