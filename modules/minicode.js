@@ -10,6 +10,7 @@ export default class MiniCode {
   score; 
   boost;
   penalties;
+  keytopress
   
   clicks; 
   pointsMulti; 
@@ -22,8 +23,7 @@ export default class MiniCode {
   keyHandlerBind;
   clickHandlerBind
   callGameStartBind
-
-  keytopress;
+  
   fatiguepower;
   codepower;
 
@@ -163,6 +163,7 @@ export default class MiniCode {
     this.canvas.addEventListener("click", this.callGameStartBind)
     document.addEventListener("keydown", this.callGameStartBind)
   }
+  
   callGameStart(event){
     event.stopPropagation()
     if (event.type === "click") {
@@ -178,20 +179,12 @@ export default class MiniCode {
       }
     }
   }
-  
-  // setDecreaseInter(inter) {
-    // if (this.decreaseInterval) {
-      // clearInterval(this.decreaseInterval);
-    // }
-    // this.decreaseInterval = setInterval(gameControl.negativeCoding.bind(this), inter);
-  // }
 
   random(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
   animation() {
-    
     canvasAux.setCanvasArea.call(this)
     
     if(this.gameOn) {

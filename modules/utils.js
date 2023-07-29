@@ -151,6 +151,7 @@ const animate = {
       } else {
         this.spriteKey++;
       }
+      console.log(this.bugsTimeoutParam)
     }
   },
   
@@ -576,7 +577,7 @@ const lvlControl = {
     this.fatiguepower = newFatigue;
     this.codepower = newCodePower;
     gameControl.setDecreaseInterval.call(this, newDecInter);
-    this.bugsTimeoutParam = {}
+    this.bugsTimeoutParam = bugsParam
   },
   
 }
