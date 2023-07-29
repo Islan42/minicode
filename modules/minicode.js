@@ -20,6 +20,7 @@ export default class MiniCode {
   boostTimeouts;
   
   keyHandlerBind;
+  clickHandlerBind
   callGameStartBind
 
   keytopress;
@@ -46,7 +47,7 @@ export default class MiniCode {
   
   pivot;
   desktop;
-  clickHandlerBind
+  
   cacheRootWidth
   
   idRAF
@@ -126,8 +127,8 @@ export default class MiniCode {
     this.bugsCount = [];
     this.preventPenalties = false;
     this.boostTimeouts = []
-    this.clickHandlerBind = this.clickHandler.bind(this);
-    this.keyHandlerBind = this.keyHandler.bind(this);
+    this.clickHandlerBind = inputGame.clickHandler.bind(this);
+    this.keyHandlerBind = inputGame.keyHandler.bind(this);
     this.callGameStartBind = this.callGameStart.bind(this);
     this.controlFR = 0;
     this.spriteKey = 0;
@@ -178,18 +179,6 @@ export default class MiniCode {
     }
   }
   
-  // setClickInputListener() {
-    // if (this.pivot){
-      // this.root.addEventListener("click", this.clickHandlerBind)
-    // }
-  // }
-  // setKeyInputListener(key) {
-    // if (this.keytopress) {
-      // document.removeEventListener("keydown", this.keyHandlerBind);
-    // }
-    // this.keytopress = key;
-    // document.addEventListener("keydown", this.keyHandlerBind);
-  // }
   setDecreaseInter(inter) {
     if (this.decreaseInterval) {
       clearInterval(this.decreaseInterval);
@@ -217,43 +206,7 @@ export default class MiniCode {
     const newKey = keys[this.random(0, 25)];
     inputGame.setKeyInputListener.call(this, newKey);
   }
-
-  clickHandler(event) {
-    if (event.target === this.pivot) {
-      this.clicks++;
-      this.positiveCoding(this.codepower);
-      this.updateBoost();
-      this.updatePoints();
-      if (this.bugsON.end) {
-        canvasAux.setPivot.call(this, "random")   //UTILS . SET PIVOT
-      }
-    } else {
-      this.negativeCoding(Math.floor(this.codepower * 0.6));
-        this.negativeAnim = true;
-        setTimeout(() => this.negativeAnim = false, 500)
-    }
-  }
-  keyHandler(event) {
-    if (event.key === " ") {
-      event.preventDefault();
-    }
-    if (!event.repeat) {
-      const match = event.key.toLowerCase() === this.keytopress.toLowerCase();
-      if (match) {
-        this.clicks++;
-        this.positiveCoding(this.codepower);
-        this.updateBoost();
-        this.updatePoints();
-        if (this.bugsON.end) {
-          this.setRandomKey()
-        }
-      } else {
-        this.negativeCoding(Math.floor(this.codepower * 0.6));
-        this.negativeAnim = true;
-        setTimeout(() => this.negativeAnim = false, 500)
-      }
-    }
-  }
+  
   updateBoost() {
     this.boost++;
     const timeout = setTimeout(() => this.boost --, 7000);

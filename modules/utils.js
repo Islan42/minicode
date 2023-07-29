@@ -307,7 +307,46 @@ const inputGame = {
     }
     this.keytopress = key;
     document.addEventListener("keydown", this.keyHandlerBind);
-  }
+  },
+  
+  clickHandler(event) {
+    if (event.target === this.pivot) {
+      this.clicks++;
+      this.positiveCoding(this.codepower);  //VAI QUEBRAR
+      this.updateBoost(); //VAI QUEBRAR
+      this.updatePoints();  //VAI QUEBRAR
+      if (this.bugsON.end) {
+        canvasAux.setPivot.call(this, "random")   //UTILS . SET PIVOT
+      }
+    } else {
+      this.negativeCoding(Math.floor(this.codepower * 0.6));  //VAI QUEBRAR
+        this.negativeAnim = true;
+        setTimeout(() => this.negativeAnim = false, 500)
+    }
+  },
+  
+  keyHandler(event) {
+    if (event.key === " ") {
+      event.preventDefault();
+    }
+    if (!event.repeat) {
+      const match = event.key.toLowerCase() === this.keytopress.toLowerCase();
+      if (match) {
+        this.clicks++;
+        this.positiveCoding(this.codepower);
+        this.updateBoost();
+        this.updatePoints();
+        if (this.bugsON.end) {
+          this.setRandomKey()
+        }
+      } else {
+        this.negativeCoding(Math.floor(this.codepower * 0.6));
+        this.negativeAnim = true;
+        setTimeout(() => this.negativeAnim = false, 500)
+      }
+    }
+  },
+  
 }
 
 const gameControl = {}
