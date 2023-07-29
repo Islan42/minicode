@@ -94,6 +94,7 @@ export default class MiniCode {
   
   main(){
     nextFrame.call(this)
+    this.checkBoost()
     this.animation()
     this.idRAF = requestAnimationFrame(this.main.bind(this))
 
@@ -574,7 +575,6 @@ export default class MiniCode {
     this.setCanvasArea()
     
     if(this.gameOn) {
-      this.checkBoost();
       animate.drawDesk.call(this);
       animate.drawLorem.call(this); //
       animate.drawBars.call(this); //
@@ -588,13 +588,6 @@ export default class MiniCode {
     } else {
       animate.drawGameOver.call(this) //
     }
-    
-    
-    
-    
-    
-    
-    
   }
   
   deleteThis(){
