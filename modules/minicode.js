@@ -87,9 +87,24 @@ export default class MiniCode {
     this.#assets = { lorem, desk, key, spacebar, penalties, bugs };
     
     this.gameStart()
-    this.animation();
+    this.main()
+    // this.animation()
   }
+  
+  main(){
+    nextFrame.call(this)
+    this.animation()
+    this.#idRAF = requestAnimationFrame(this.main.bind(this))
 
+    function nextFrame(){
+      if (this.#controlFR === 60) {
+        this.#controlFR = 0;
+      } else {
+        this.#controlFR++;
+      }      
+    }
+  }
+  
   gameStart() {
     this.#gameOn = true;
     this.#coding = 50;
@@ -554,11 +569,6 @@ export default class MiniCode {
   }
 
   animation() {
-    if (this.#controlFR === 60) {
-      this.#controlFR = 0;
-    } else {
-      this.#controlFR++;
-    }
     
     this.setCanvasArea()
     
@@ -577,8 +587,6 @@ export default class MiniCode {
     } else {
       drawGameOver.call(this)
     }
-    
-    this.#idRAF = requestAnimationFrame(this.animation.bind(this))
 
     function drawDesk() {
       this.#ctx.save() // SAVE #01: DESK
