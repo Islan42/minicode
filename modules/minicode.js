@@ -1,4 +1,4 @@
-import {teste, animate} from "./utils.js"
+import {teste, animate, canvasAux} from "./utils.js"
 
 export default class MiniCode {
   root;
@@ -70,7 +70,7 @@ export default class MiniCode {
       this.root.appendChild(this.canvas);
       
       this.ctx = this.canvas.getContext("2d");
-      this.setCanvasArea()
+      canvasAux.setCanvasArea.call(this)
     }
     
     const aux = this.random(1,2)
@@ -139,7 +139,7 @@ export default class MiniCode {
     if (this.desktop) {
       this.setKey(" ");
     } else {
-      this.setPivot("initial")
+      canvasAux.setPivot.call(this, "initial")
       this.setClick()
     }
     
@@ -178,39 +178,6 @@ export default class MiniCode {
     }
   }
   
-  setCanvasArea() {
-    if (this.root.clientWidth > 500) {
-      this.canvas.width = 500;
-    } else {
-      this.canvas.width = this.root.clientWidth
-    }
-    const b = this.canvas.width/2.5
-    this.canvas.height = b;
-    
-    if (this.cacheRootWidth !== this.root.clientWidth && this.bugsON) {
-      const pos = this.bugsON.end ? "random" : "initial"
-      this.setPivot(pos)
-    }
-    this.cacheRootWidth = this.root.clientWidth
-  }
-  setPivot(pos){
-    let aux = (this.root.clientWidth - this.canvas.width)/2
-    if (aux < 0) {
-      aux = 0
-    }
-    const width = this.canvas.width
-    const height = this.canvas.height
-    if (pos === "initial") {
-      const mid = this.canvas.width / 2 - 25
-      this.pivot.style.top = `${height - 50}px`
-      this.pivot.style.left = `${aux + mid}px`
-    } else {
-      const randX = this.random(0, width - 50)
-      const randY = this.random(0, height - 50)
-      this.pivot.style.top = `${randY}px`
-      this.pivot.style.left = `${aux + randX}px`
-    }
-  }
   setClick() {
     if (this.pivot){
       this.root.addEventListener("click", this.clickHandlerBind)
@@ -258,7 +225,7 @@ export default class MiniCode {
       this.updateBoost();
       this.updatePoints();
       if (this.bugsON.end) {
-        this.setPivot("random")
+        canvasAux.setPivot.call(this, "random")   //UTILS . SET PIVOT
       }
     } else {
       this.negativeCoding(Math.floor(this.codepower * 0.6));
@@ -499,7 +466,7 @@ export default class MiniCode {
     if (this.desktop) {
       this.setRandomKey()
     } else {
-      this.setPivot("random")
+      canvasAux.setPivot.call(this, "random") //UTILS . SET PIVOT
     }
     this.pointsMulti = 5;
     this.penalties = 1;
@@ -558,7 +525,7 @@ export default class MiniCode {
     if (this.desktop) {
       this.setKey(" ");
     } else {
-      this.setPivot("initial")
+      canvasAux.setPivot.call(this, "initial")  //UTILS . SET PIVOT
     }
     this.setBugsTimeout(this.bugsTimeoutParam.min, this.bugsTimeoutParam.max);
     this.pointsMulti = 1;
@@ -572,7 +539,7 @@ export default class MiniCode {
 
   animation() {
     
-    this.setCanvasArea()
+    canvasAux.setCanvasArea.call(this)
     
     if(this.gameOn) {
       animate.drawDesk.call(this);

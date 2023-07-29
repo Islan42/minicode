@@ -266,4 +266,43 @@ const animate = {
   },
 }
 
-export {teste, animate}
+const canvasAux = {
+  setCanvasArea() {
+    if (this.root.clientWidth > 500) {
+      this.canvas.width = 500;
+    } else {
+      this.canvas.width = this.root.clientWidth
+    }
+    const b = this.canvas.width/2.5
+    this.canvas.height = b;
+    
+    if (this.cacheRootWidth !== this.root.clientWidth && this.bugsON) {
+      const pos = this.bugsON.end ? "random" : "initial"
+      canvasAux.setPivot.call(this, pos)  //GAMBIARRA???? KKKKKKKKKKKKKKKKKKKKKKKKKKKKK
+    }
+    this.cacheRootWidth = this.root.clientWidth
+  },
+  
+  setPivot(pos){
+    let aux = (this.root.clientWidth - this.canvas.width)/2
+    if (aux < 0) {
+      aux = 0
+    }
+    const width = this.canvas.width
+    const height = this.canvas.height
+    if (pos === "initial") {
+      const mid = this.canvas.width / 2 - 25
+      this.pivot.style.top = `${height - 50}px`
+      this.pivot.style.left = `${aux + mid}px`
+    } else {
+      const randX = this.random(0, width - 50)
+      const randY = this.random(0, height - 50)
+      this.pivot.style.top = `${randY}px`
+      this.pivot.style.left = `${aux + randX}px`
+    }
+  },
+  
+  
+}
+
+export {teste, animate, canvasAux, }
