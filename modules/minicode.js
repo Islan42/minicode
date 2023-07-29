@@ -201,11 +201,11 @@ export default class MiniCode {
   random(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
-  setRandomKey() {
-    const keys = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
-    const newKey = keys[this.random(0, 25)];
-    inputGame.setKeyInputListener.call(this, newKey);
-  }
+  // setRandomKey() {
+    // const keys = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+    // const newKey = keys[this.random(0, 25)];
+    // inputGame.setKeyInputListener.call(this, newKey);
+  // }
   
   updateBoost() {
     this.boost++;
@@ -417,7 +417,7 @@ export default class MiniCode {
 
   itsBugsTime() { 
     if (this.desktop) {
-      this.setRandomKey()
+      inputGame.setRandomKey.call(this)
     } else {
       canvasAux.setPivot.call(this, "random") //UTILS . SET PIVOT
     }

@@ -337,7 +337,7 @@ const inputGame = {
         this.updateBoost();
         this.updatePoints();
         if (this.bugsON.end) {
-          this.setRandomKey()
+          inputGame.setRandomKey.call(this)
         }
       } else {
         this.negativeCoding(Math.floor(this.codepower * 0.6));
@@ -347,9 +347,16 @@ const inputGame = {
     }
   },
   
+  setRandomKey() {
+    const keys = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+    const newKey = keys[this.random(0, 25)];
+    inputGame.setKeyInputListener.call(this, newKey);
+  },
 }
 
-const gameControl = {}
+const gameControl = {
+  
+}
 
 const lvlControl = {}
 
