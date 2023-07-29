@@ -415,7 +415,7 @@ const gameControl = {
       if (!this.preventPenalties && this.penalties === 1) {
         this.gameOver();
       } else {
-        this.lvlDown(); //VAI QUEBRAR
+        lvlControl.lvlDown.call(this); //VAI QUEBRAR  //QUEBROU
       }
     }
   },
@@ -423,14 +423,161 @@ const gameControl = {
   positiveCoding(value) {
     this.coding += value;
     if (this.coding > this.lvl.nextLvl) {
-      this.lvlUp(); //VAI QUEBRAR
+      lvlControl.lvlUp.call(this); //VAI QUEBRAR //QUEBROU
     }
   },
   
 }
 
-const lvlControl = {}
+const lvlControl = {
+  lvlUp() {
+    if (!this.preventPenalties) {
+      this.preventPenalties = true;
+      setTimeout(() => (this.preventPenalties = false), 500);
+    }
+    if (this.bugsON.start) {
+      this.itsBugsTime();
+    } else if (this.bugsON.end) {
+      this.itsNotBugsTime();
+    }
 
-const bugsTimeControl = {}
+    this.lvl.lvl++;
+    if (this.lvl.lvl > this.lvl.maxLvl) {
+      this.lvl.maxLvl ++;
+    }
+    lvlControl.setNextLvl.call(this);
+    if (this.bugsON.end) {
+      this.itsBugsLvl();
+    }
+  },
+  
+  lvlDown() {
+    if (this.lvl.lvl > 0) {
+      this.lvl.lvl--;
+      lvlControl.setPrevLvl.call(this);
+    }
 
-export {animate, canvasAux, inputGame, gameControl, lvlControl, bugsTimeControl, }
+    if (!this.preventPenalties) {
+      this.penalties++;
+      this.preventPenalties = true;
+      setTimeout(() => (this.preventPenalties = false), 2600);
+      this.spritePen = 0;
+    }
+  },
+  
+  setNextLvl() {
+    this.lvl.prevLvl = this.lvl.nextLvl;
+    let skip;
+    let newFatigue;
+    let newDecInter;
+    let newCodePower;  
+    let bugsParam = {}
+    switch (true) {
+      case this.lvl.lvl < 5: 
+        skip = 200;
+        newFatigue = 15;
+        newDecInter = 250;
+        newCodePower = 30;
+        bugsParam = {min: 10, max: 16}
+        break;
+      case this.lvl.lvl < 10: 
+        skip = 400;
+        newFatigue = 18;
+        newDecInter = 250;
+        newCodePower = 40;
+        bugsParam = {min: 12, max: 18}
+        break;
+      case this.lvl.lvl < 15:
+        skip = 600;
+        newFatigue = 21;
+        newDecInter = 200;
+        newCodePower = 45;
+        bugsParam = {min: 14, max: 22}
+        break;
+      case this.lvl.lvl < 20:
+        skip = 1000;
+        newFatigue = 24;
+        newDecInter = 200;
+        newCodePower = 50;
+        bugsParam = {min: 18, max: 28}
+        break;
+      default:
+        skip = 1500;
+        newFatigue = 27;
+        newDecInter = 150;
+        newCodePower = 55;
+        bugsParam = {min: 20, max: 32}
+    }
+    this.lvl.nextLvl += skip;
+    this.fatiguepower = newFatigue;
+    this.codepower = newCodePower;
+    this.setDecreaseInter(newDecInter);
+    this.bugsTimeoutParam = bugsParam;
+  },
+  
+  setPrevLvl() {
+    this.lvl.nextLvl = this.lvl.prevLvl;
+    let skip;
+    let newFatigue;
+    let newDecInter;
+    let newCodePower;
+    let bugsParam = {}
+    switch (true) {
+      case this.lvl.lvl === 0:
+        skip = 100;
+        newFatigue = 5;
+        newDecInter = 500;
+        newCodePower = 25;
+        bugsParam = {min: 10, max: 16}
+        break;
+      case this.lvl.lvl < 5:
+        skip = 200;
+        newFatigue = 15;
+        newDecInter = 250;
+        newCodePower = 30;
+        bugsParam = {min: 10, max: 16}
+        break;
+      case this.lvl.lvl < 10:
+        skip = 400;
+        newFatigue = 18;
+        newDecInter = 250;
+        newCodePower = 40;
+        bugsParam = {min: 12, max: 18}
+        break;
+      case this.lvl.lvl < 15:
+        skip = 600;
+        newFatigue = 21;
+        newDecInter = 200;
+        newCodePower = 45;
+        bugsParam = {min: 14, max: 22}
+        break;
+      case this.lvl.lvl < 20:
+        skip = 1000;
+        newFatigue = 24;
+        newDecInter = 200;
+        newCodePower = 50;
+        bugsParam = {min: 18, max: 28}
+        break;
+      default:
+        skip = 1500;
+        newFatigue = 27;
+        newDecInter = 150;
+        newCodePower = 55;
+        bugsParam = {min: 20, max: 32}
+    }
+    this.lvl.prevLvl -= skip;
+    this.fatiguepower = newFatigue;
+    this.codepower = newCodePower;
+    this.setDecreaseInter(newDecInter);
+    this.bugsTimeoutParam = {}
+  },
+  
+}
+
+const bugsTimeControl = {
+
+}
+
+const timeControl
+
+export { animate, canvasAux, inputGame, gameControl, lvlControl, bugsTimeControl, timeControl, }
