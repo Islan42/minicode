@@ -95,7 +95,7 @@ export default class MiniCode {
   
   main(){
     nextFrame.call(this)
-    this.checkBoost()
+    gameControl.checkBoost.call(this)
     this.animation()
     this.idRAF = requestAnimationFrame(this.main.bind(this))
 
@@ -183,7 +183,7 @@ export default class MiniCode {
     if (this.decreaseInterval) {
       clearInterval(this.decreaseInterval);
     }
-    this.decreaseInterval = setInterval(this.negativeCoding.bind(this), inter);
+    this.decreaseInterval = setInterval(gameControl.negativeCoding.bind(this), inter);
   }
   setBugsTimeout(min, max) {
     const time = this.random(min, max);
@@ -200,79 +200,6 @@ export default class MiniCode {
 
   random(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-  // setRandomKey() {
-    // const keys = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
-    // const newKey = keys[this.random(0, 25)];
-    // inputGame.setKeyInputListener.call(this, newKey);
-  // }
-  
-  updateBoost() {
-    this.boost++;
-    const timeout = setTimeout(() => this.boost --, 7000);
-    this.boostTimeouts.push(timeout); 
-  }
-  checkBoost(){
-    switch (true) {
-      case this.boost < 5:
-        this.boostMulti = 1;
-        break;
-      case this.boost < 10:
-        this.boostMulti = 1.5;
-        break;
-      case this.boost < 15:
-        this.boostMulti = 2;
-        break;
-      case this.boost < 20:
-        this.boostMulti = 2.5;
-        break;
-      case this.boost < 25:
-        this.boostMulti = 3.0;
-        break;
-      case this.boost < 30:
-        this.boostMulti = 3.5;
-        break;
-      case this.boost < 35:
-        this.boostMulti = 4.0;
-        break;
-      case this.boost < 40:
-        this.boostMulti = 4.5;
-        break;
-      case this.boost < 45:
-        this.boostMulti = 5.0;
-        break;
-      case this.boost < 50:
-        this.boostMulti = 5.5;
-        break;
-      default:
-        this.boostMulti = 6.0;
-        break;
-    }
-  }
-  updatePoints() {
-    const aux = this.clicks % 10;
-    if (aux === 0) {
-      this.score += 10 * this.pointsMulti * this.boostMulti;
-      if (this.spriteLorem % 3 === 0) {
-        setTimeout(() => this.spriteLorem++, 300);
-      }
-    }
-  }
-  negativeCoding(value = this.fatiguepower) {
-    this.coding -= value;
-    if (this.coding <= this.lvl.prevLvl) {
-      if (!this.preventPenalties && this.penalties === 1) {
-        this.gameOver();
-      } else {
-        this.lvlDown();
-      }
-    }
-  }
-  positiveCoding(value) {
-    this.coding += value;
-    if (this.coding > this.lvl.nextLvl) {
-      this.lvlUp();
-    }
   }
 
   lvlDown() {

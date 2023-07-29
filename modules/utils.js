@@ -312,14 +312,14 @@ const inputGame = {
   clickHandler(event) {
     if (event.target === this.pivot) {
       this.clicks++;
-      this.positiveCoding(this.codepower);  //VAI QUEBRAR
-      this.updateBoost(); //VAI QUEBRAR
-      this.updatePoints();  //VAI QUEBRAR
+      gameControl.positiveCoding.call(this, this.codepower);  //VAI QUEBRAR //QUEBROU
+      gameControl.updateBoost.call(this); //VAI QUEBRAR //QUEBROU
+      gameControl.updatePoints.call(this);  //VAI QUEBRAR //QUEBROU
       if (this.bugsON.end) {
         canvasAux.setPivot.call(this, "random")   //UTILS . SET PIVOT
       }
     } else {
-      this.negativeCoding(Math.floor(this.codepower * 0.6));  //VAI QUEBRAR
+      gameControl.negativeCoding.call(this, Math.floor(this.codepower * 0.6));  //VAI QUEBRAR //QUEBROU
         this.negativeAnim = true;
         setTimeout(() => this.negativeAnim = false, 500)
     }
@@ -333,14 +333,14 @@ const inputGame = {
       const match = event.key.toLowerCase() === this.keytopress.toLowerCase();
       if (match) {
         this.clicks++;
-        this.positiveCoding(this.codepower);
-        this.updateBoost();
-        this.updatePoints();
+        gameControl.positiveCoding.call(this, this.codepower);  //QUEBROU
+        gameControl.updateBoost.call(this);  //QUEBROU
+        gameControl.updatePoints.call(this); //QUEBROU
         if (this.bugsON.end) {
           inputGame.setRandomKey.call(this)
         }
       } else {
-        this.negativeCoding(Math.floor(this.codepower * 0.6));
+        gameControl.negativeCoding.call(this, Math.floor(this.codepower * 0.6));
         this.negativeAnim = true;
         setTimeout(() => this.negativeAnim = false, 500)
       }
@@ -355,6 +355,77 @@ const inputGame = {
 }
 
 const gameControl = {
+  updateBoost() {
+    this.boost++;
+    const timeout = setTimeout(() => this.boost --, 7000);
+    this.boostTimeouts.push(timeout); 
+  },
+  
+  checkBoost(){
+    switch (true) {
+      case this.boost < 5:
+        this.boostMulti = 1;
+        break;
+      case this.boost < 10:
+        this.boostMulti = 1.5;
+        break;
+      case this.boost < 15:
+        this.boostMulti = 2;
+        break;
+      case this.boost < 20:
+        this.boostMulti = 2.5;
+        break;
+      case this.boost < 25:
+        this.boostMulti = 3.0;
+        break;
+      case this.boost < 30:
+        this.boostMulti = 3.5;
+        break;
+      case this.boost < 35:
+        this.boostMulti = 4.0;
+        break;
+      case this.boost < 40:
+        this.boostMulti = 4.5;
+        break;
+      case this.boost < 45:
+        this.boostMulti = 5.0;
+        break;
+      case this.boost < 50:
+        this.boostMulti = 5.5;
+        break;
+      default:
+        this.boostMulti = 6.0;
+        break;
+    }
+  },
+  
+  updatePoints() {
+    const aux = this.clicks % 10;
+    if (aux === 0) {
+      this.score += 10 * this.pointsMulti * this.boostMulti;
+      if (this.spriteLorem % 3 === 0) {
+        setTimeout(() => this.spriteLorem++, 300);
+      }
+    }
+  },
+  
+  negativeCoding(value = this.fatiguepower) {
+    this.coding -= value;
+    if (this.coding <= this.lvl.prevLvl) {
+      if (!this.preventPenalties && this.penalties === 1) {
+        this.gameOver();
+      } else {
+        this.lvlDown(); //VAI QUEBRAR
+      }
+    }
+  },
+  
+  positiveCoding(value) {
+    this.coding += value;
+    if (this.coding > this.lvl.nextLvl) {
+      this.lvlUp(); //VAI QUEBRAR
+    }
+  },
   
 }
 
