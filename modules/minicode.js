@@ -144,8 +144,8 @@ export default class MiniCode {
       inputGame.setClickInputListener.call(this)
     }
     
-    this.setDecreaseInter(500);
-    this.setBugsTimeout(this.bugsTimeoutParam.min, this.bugsTimeoutParam.max);
+    gameControl.setDecreaseInterval.call(this, 500);
+    bugsTimeControl.setBugsTimeout.call(this, this.bugsTimeoutParam.min, this.bugsTimeoutParam.max);
   }
   gameOver() {
     if (this.desktop) {
@@ -179,102 +179,15 @@ export default class MiniCode {
     }
   }
   
-  setDecreaseInter(inter) {
-    if (this.decreaseInterval) {
-      clearInterval(this.decreaseInterval);
-    }
-    this.decreaseInterval = setInterval(gameControl.negativeCoding.bind(this), inter);
-  }
-  setBugsTimeout(min, max) {
-    const time = this.random(min, max);
-    if (this.bugsTimeout) {
-      clearTimeout(this.bugsTimeout);
-    }
-    this.bugsTimeout = setTimeout(
-      () => {
-        this.bugsON.start = true
-      },
-      time * 1000
-    );
-  }
+  // setDecreaseInter(inter) {
+    // if (this.decreaseInterval) {
+      // clearInterval(this.decreaseInterval);
+    // }
+    // this.decreaseInterval = setInterval(gameControl.negativeCoding.bind(this), inter);
+  // }
 
   random(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-
-  itsBugsTime() { 
-    if (this.desktop) {
-      inputGame.setRandomKey.call(this)
-    } else {
-      canvasAux.setPivot.call(this, "random") //UTILS . SET PIVOT
-    }
-    this.pointsMulti = 5;
-    this.penalties = 1;
-    this.preventPenalties = false;
-    this.spritePen = 0;
-    this.bugsON = {
-      start: false,
-      end: true,
-    };
-    this.bugsCount = [];
-  }
-  itsBugsLvl() {
-    this.bugsSaveNormal = {
-      prevLvl: this.lvl.prevLvl,
-      nextLvl: this.lvl.nextLvl,
-    };
-    this.lvl.prevLvl = this.bugsLvl.prevLvl;
-    this.lvl.nextLvl = this.bugsLvl.nextLvl;
-    this.coding = this.lvl.nextLvl * (4/10);
-    let lvl = this.bugsLvl.lvl;
-    let newFatigue;
-    let newDecInter;
-    let nextNextLvl;
-
-    switch (true) {
-      case lvl === 0:
-        newFatigue = 7;
-        newDecInter = 500;
-        nextNextLvl = 1200;
-        break;
-      case lvl === 1:
-        newFatigue = 8;
-        newDecInter = 450;
-        nextNextLvl = 1400;
-        break;
-      case lvl === 2:
-        newFatigue = 9;
-        newDecInter = 350;
-        nextNextLvl = 1600;
-        break;
-      case lvl === 3:
-        newFatigue = 10;
-        newDecInter = 300;
-        nextNextLvl = 1800;
-        break;
-      default:
-        newFatigue = 13;
-        newDecInter = 200;
-        nextNextLvl = 2000;
-    }
-    this.setDecreaseInter(newDecInter);
-    this.fatiguepower = newFatigue;
-    this.bugsLvl = { lvl: ++lvl, prevLvl: 0, nextLvl: nextNextLvl };
-  }
-  itsNotBugsTime() {
-    if (this.desktop) {
-      inputGame.setKeyInputListener.call(this, " ");
-    } else {
-      canvasAux.setPivot.call(this, "initial")  //UTILS . SET PIVOT
-    }
-    this.setBugsTimeout(this.bugsTimeoutParam.min, this.bugsTimeoutParam.max);
-    this.pointsMulti = 1;
-    this.penalties = 0;
-    this.bugsON = { start: false, end: false };
-
-    this.coding = this.bugsSaveNormal.nextLvl;
-    this.lvl.prevLvl = this.bugsSaveNormal.prevLvl;
-    this.lvl.nextLvl = this.bugsSaveNormal.nextLvl;
   }
 
   animation() {

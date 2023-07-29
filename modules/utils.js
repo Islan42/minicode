@@ -312,14 +312,14 @@ const inputGame = {
   clickHandler(event) {
     if (event.target === this.pivot) {
       this.clicks++;
-      gameControl.positiveCoding.call(this, this.codepower);  //VAI QUEBRAR //QUEBROU
-      gameControl.updateBoost.call(this); //VAI QUEBRAR //QUEBROU
-      gameControl.updatePoints.call(this);  //VAI QUEBRAR //QUEBROU
+      gameControl.positiveCoding.call(this, this.codepower);  
+      gameControl.updateBoost.call(this); 
+      gameControl.updatePoints.call(this);  
       if (this.bugsON.end) {
-        canvasAux.setPivot.call(this, "random")   //UTILS . SET PIVOT
+        canvasAux.setPivot.call(this, "random")   
       }
     } else {
-      gameControl.negativeCoding.call(this, Math.floor(this.codepower * 0.6));  //VAI QUEBRAR //QUEBROU
+      gameControl.negativeCoding.call(this, Math.floor(this.codepower * 0.6)); 
         this.negativeAnim = true;
         setTimeout(() => this.negativeAnim = false, 500)
     }
@@ -333,9 +333,9 @@ const inputGame = {
       const match = event.key.toLowerCase() === this.keytopress.toLowerCase();
       if (match) {
         this.clicks++;
-        gameControl.positiveCoding.call(this, this.codepower);  //QUEBROU
-        gameControl.updateBoost.call(this);  //QUEBROU
-        gameControl.updatePoints.call(this); //QUEBROU
+        gameControl.positiveCoding.call(this, this.codepower); 
+        gameControl.updateBoost.call(this); 
+        gameControl.updatePoints.call(this);
         if (this.bugsON.end) {
           inputGame.setRandomKey.call(this)
         }
@@ -415,7 +415,7 @@ const gameControl = {
       if (!this.preventPenalties && this.penalties === 1) {
         this.gameOver();
       } else {
-        lvlControl.lvlDown.call(this); //VAI QUEBRAR  //QUEBROU
+        lvlControl.lvlDown.call(this);
       }
     }
   },
@@ -423,8 +423,15 @@ const gameControl = {
   positiveCoding(value) {
     this.coding += value;
     if (this.coding > this.lvl.nextLvl) {
-      lvlControl.lvlUp.call(this); //VAI QUEBRAR //QUEBROU
+      lvlControl.lvlUp.call(this);
     }
+  },
+  
+  setDecreaseInterval(inter) {
+    if (this.decreaseInterval) {
+      clearInterval(this.decreaseInterval);
+    }
+    this.decreaseInterval = setInterval(gameControl.negativeCoding.bind(this), inter);
   },
   
 }
@@ -436,9 +443,9 @@ const lvlControl = {
       setTimeout(() => (this.preventPenalties = false), 500);
     }
     if (this.bugsON.start) {
-      this.itsBugsTime();
+      bugsTimeControl.itsBugsTime.call(this);
     } else if (this.bugsON.end) {
-      this.itsNotBugsTime();
+      bugsTimeControl.itsNotBugsTime.call(this);
     }
 
     this.lvl.lvl++;
@@ -447,7 +454,7 @@ const lvlControl = {
     }
     lvlControl.setNextLvl.call(this);
     if (this.bugsON.end) {
-      this.itsBugsLvl();
+      bugsTimeControl.itsBugsLvl.call(this);
     }
   },
   
@@ -511,7 +518,7 @@ const lvlControl = {
     this.lvl.nextLvl += skip;
     this.fatiguepower = newFatigue;
     this.codepower = newCodePower;
-    this.setDecreaseInter(newDecInter);
+    gameControl.setDecreaseInterval.call(this, newDecInter);
     this.bugsTimeoutParam = bugsParam;
   },
   
@@ -568,16 +575,106 @@ const lvlControl = {
     this.lvl.prevLvl -= skip;
     this.fatiguepower = newFatigue;
     this.codepower = newCodePower;
-    this.setDecreaseInter(newDecInter);
+    gameControl.setDecreaseInterval.call(this, newDecInter);
     this.bugsTimeoutParam = {}
   },
   
 }
 
 const bugsTimeControl = {
+  setBugsTimeout(min, max) {
+    const time = this.random(min, max);
+    if (this.bugsTimeout) {
+      clearTimeout(this.bugsTimeout);
+    }
+    this.bugsTimeout = setTimeout(
+      () => {
+        this.bugsON.start = true
+      },
+      time * 1000
+    );
+  },
+  
+  itsBugsTime() { 
+    if (this.desktop) {
+      inputGame.setRandomKey.call(this)
+    } else {
+      canvasAux.setPivot.call(this, "random")
+    }
+    this.pointsMulti = 5;
+    this.penalties = 1;
+    this.preventPenalties = false;
+    this.spritePen = 0;
+    this.bugsON = {
+      start: false,
+      end: true,
+    };
+    this.bugsCount = [];
+  },
+  
+  itsBugsLvl() {
+    this.bugsSaveNormal = {
+      prevLvl: this.lvl.prevLvl,
+      nextLvl: this.lvl.nextLvl,
+    };
+    this.lvl.prevLvl = this.bugsLvl.prevLvl;
+    this.lvl.nextLvl = this.bugsLvl.nextLvl;
+    this.coding = this.lvl.nextLvl * (4/10);
+    let lvl = this.bugsLvl.lvl;
+    let newFatigue;
+    let newDecInter;
+    let nextNextLvl;
 
+    switch (true) {
+      case lvl === 0:
+        newFatigue = 7;
+        newDecInter = 500;
+        nextNextLvl = 1200;
+        break;
+      case lvl === 1:
+        newFatigue = 8;
+        newDecInter = 450;
+        nextNextLvl = 1400;
+        break;
+      case lvl === 2:
+        newFatigue = 9;
+        newDecInter = 350;
+        nextNextLvl = 1600;
+        break;
+      case lvl === 3:
+        newFatigue = 10;
+        newDecInter = 300;
+        nextNextLvl = 1800;
+        break;
+      default:
+        newFatigue = 13;
+        newDecInter = 200;
+        nextNextLvl = 2000;
+    }
+    gameControl.setDecreaseInterval.call(this, newDecInter);
+    this.fatiguepower = newFatigue;
+    this.bugsLvl = { lvl: ++lvl, prevLvl: 0, nextLvl: nextNextLvl };
+  },
+  
+  itsNotBugsTime() {
+    if (this.desktop) {
+      inputGame.setKeyInputListener.call(this, " ");
+    } else {
+      canvasAux.setPivot.call(this, "initial")  
+    }
+    bugsTimeControl.setBugsTimeout.call(this, this.bugsTimeoutParam.min, this.bugsTimeoutParam.max);
+    this.pointsMulti = 1;
+    this.penalties = 0;
+    this.bugsON = { start: false, end: false };
+
+    this.coding = this.bugsSaveNormal.nextLvl;
+    this.lvl.prevLvl = this.bugsSaveNormal.prevLvl;
+    this.lvl.nextLvl = this.bugsSaveNormal.nextLvl;
+  },
 }
 
-const timeControl
+const timeControl = {
+  // PARA DEPOIS
+}
 
 export { animate, canvasAux, inputGame, gameControl, lvlControl, bugsTimeControl, timeControl, }
