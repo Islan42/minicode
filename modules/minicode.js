@@ -189,17 +189,17 @@ export default class MiniCode {
     
     if(this.gameOn) {
       animate.drawDesk.call(this);
-      animate.drawLorem.call(this); //
-      animate.drawBars.call(this); //
+      animate.drawLorem.call(this); 
+      animate.drawBars.call(this);
       if (this.desktop) {
-        animate.drawToPress.call(this); //
+        animate.drawToPress.call(this);
       }
-      animate.drawPenalties.call(this); //
+      animate.drawPenalties.call(this);
       if (this.bugsON.end) {
-        animate.drawBugs.call(this) //
+        animate.drawBugs.call(this)
       }
     } else {
-      animate.drawGameOver.call(this) //
+      animate.drawGameOver.call(this)
     }
   }
   
@@ -208,5 +208,9 @@ export default class MiniCode {
     this.canvas.removeEventListener("click", this.callGameStartBind)
     document.removeEventListener("keydown", this.callGameStartBind)
     cancelAnimationFrame(this.idRAF)
+  }
+  
+  debug(){
+    // Implement Later
   }
 }

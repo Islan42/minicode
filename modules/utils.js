@@ -151,7 +151,6 @@ const animate = {
       } else {
         this.spriteKey++;
       }
-      console.log(this.bugsTimeoutParam)
     }
   },
   
