@@ -1,12 +1,3 @@
-const teste = {
-  a(){
-    console.log(this.a)
-  },
-  b(){
-    console.log(this.b)
-  }
-}
-
 const animate = {
   drawDesk() {
     this.ctx.save() // SAVE 01: DESK
@@ -301,8 +292,28 @@ const canvasAux = {
       this.pivot.style.left = `${aux + randX}px`
     }
   },
-  
-  
 }
 
-export {teste, animate, canvasAux, }
+const inputGame = {
+  setClickInputListener() {
+    if (this.pivot){
+      this.root.addEventListener("click", this.clickHandlerBind)
+    }
+  },
+  
+  setKeyInputListener(key) {
+    if (this.keytopress) {
+      document.removeEventListener("keydown", this.keyHandlerBind);
+    }
+    this.keytopress = key;
+    document.addEventListener("keydown", this.keyHandlerBind);
+  }
+}
+
+const gameControl = {}
+
+const lvlControl = {}
+
+const bugsTimeControl = {}
+
+export {animate, canvasAux, inputGame, gameControl, lvlControl, bugsTimeControl, }

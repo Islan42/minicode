@@ -1,4 +1,4 @@
-import {teste, animate, canvasAux} from "./utils.js"
+import {animate, canvasAux, inputGame, gameControl, lvlControl, bugsTimeControl, } from "./utils.js"
 
 export default class MiniCode {
   root;
@@ -137,10 +137,10 @@ export default class MiniCode {
     this.negativeAnim = false;
     
     if (this.desktop) {
-      this.setKey(" ");
+      inputGame.setKeyInputListener.call(this, " ");
     } else {
       canvasAux.setPivot.call(this, "initial")
-      this.setClick()
+      inputGame.setClickInputListener.call(this)
     }
     
     this.setDecreaseInter(500);
@@ -178,18 +178,18 @@ export default class MiniCode {
     }
   }
   
-  setClick() {
-    if (this.pivot){
-      this.root.addEventListener("click", this.clickHandlerBind)
-    }
-  }
-  setKey(key) {
-    if (this.keytopress) {
-      document.removeEventListener("keydown", this.keyHandlerBind);
-    }
-    this.keytopress = key;
-    document.addEventListener("keydown", this.keyHandlerBind);
-  }
+  // setClickInputListener() {
+    // if (this.pivot){
+      // this.root.addEventListener("click", this.clickHandlerBind)
+    // }
+  // }
+  // setKeyInputListener(key) {
+    // if (this.keytopress) {
+      // document.removeEventListener("keydown", this.keyHandlerBind);
+    // }
+    // this.keytopress = key;
+    // document.addEventListener("keydown", this.keyHandlerBind);
+  // }
   setDecreaseInter(inter) {
     if (this.decreaseInterval) {
       clearInterval(this.decreaseInterval);
@@ -215,7 +215,7 @@ export default class MiniCode {
   setRandomKey() {
     const keys = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
     const newKey = keys[this.random(0, 25)];
-    this.setKey(newKey);
+    inputGame.setKeyInputListener.call(this, newKey);
   }
 
   clickHandler(event) {
@@ -523,7 +523,7 @@ export default class MiniCode {
   }
   itsNotBugsTime() {
     if (this.desktop) {
-      this.setKey(" ");
+      inputGame.setKeyInputListener.call(this, " ");
     } else {
       canvasAux.setPivot.call(this, "initial")  //UTILS . SET PIVOT
     }
