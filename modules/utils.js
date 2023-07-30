@@ -198,7 +198,9 @@ const animate = {
     }
     
     if (this.controlFR % 61 === 0 && this.bugsCount.length < this.bugsLvl.bugs) {
-      for (let i = 0; i < 2; i++){
+      const maxIterator = Math.ceil(this.bugsLvl.bugs / 15) // Velocidade com que a tela enche de bugs
+      // console.log(maxIterator)  //DEBUG
+      for (let i = 0; i < maxIterator; i++){
         const posX = this.random(0, this.canvas.width)
         const posY = this.random(0, this.canvas.height)
         const rads = this.random(0, Math.PI * 2)
@@ -674,7 +676,7 @@ const bugsTimeControl = {
         newDecInter = 200;
         nextNextLvl = 2000;
     }
-    const newBugs = 30 + (10 * lvl)
+    const newBugs = 50 + (10 * lvl)
     const newTimer = 30 - (2 * lvl) > 20 ? 30 - (2 * lvl) : 20
     console.log(newBugs, newTimer)  //DEBUG
     gameControl.setDecreaseInterval.call(this, newDecInter);
