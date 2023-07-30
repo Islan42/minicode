@@ -13,7 +13,7 @@
   ## BUGS CONHECIDOS
 
     - [X] BUG #06: Pressionar o botão incorreto contribui para a pontuação. Isso não deveria acontecer! [SOLVED]
-    - []  BUG #07: setPivot() sendo chamada indevidamente (Linha 300)
+    - [X]  BUG #07: setPivot() sendo chamada indevidamente (Linha 300) [SOLVED]
 
   ## TESTAR
 

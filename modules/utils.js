@@ -290,7 +290,7 @@ const canvasAux = {
     const b = this.canvas.width/2.5
     this.canvas.height = b;
     
-    if (this.cacheRootWidth !== this.root.clientWidth && this.bugsON) {
+    if (this.cacheRootWidth !== this.root.clientWidth && this.bugsON && this.pivot) {
       const pos = this.bugsON.end ? "random" : "initial"
       canvasAux.setPivot.call(this, pos)  //GAMBIARRA???? KKKKKKKKKKKKKKKKKKKKKKKKKKKKK
     }
