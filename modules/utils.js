@@ -624,7 +624,7 @@ const bugsTimeControl = {
     } else {
       canvasAux.setPivot.call(this, "random")
     }
-    this.pointsMulti = 2 + this.bugsLvl.lvl <= 5 ? 1 + this.bugsLvl.lvl : 5;
+    this.pointsMulti = 2 + this.bugsLvl.lvl <= 5 ? 2 + this.bugsLvl.lvl : 5;
     this.penalties = 1;
     this.preventPenalties = false;
     this.spritePen = 0;
