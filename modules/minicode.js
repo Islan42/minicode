@@ -38,6 +38,7 @@ export default class MiniCode {
   ctx;
 
   controlFR;
+  controlBugsTimerFR;
   spriteKey;
   spriteLorem;
   spritePen;
@@ -94,18 +95,13 @@ export default class MiniCode {
   }
   
   main(){
-    nextFrame.call(this)
+    timeControl.nextFrame.call(this)
+    timeControl.updateBugsTimer.call(this)  //
     gameControl.checkBoost.call(this)
     this.animation()
     this.idRAF = requestAnimationFrame(this.main.bind(this))
 
-    function nextFrame(){
-      if (this.controlFR === 60) {
-        this.controlFR = 0;
-      } else {
-        this.controlFR++;
-      }      
-    }
+    
   }
   
   gameStart() {
@@ -120,7 +116,7 @@ export default class MiniCode {
     this.clicks = 0;
     this.pointsMulti = 1;
     this.boostMulti = 1;
-    this.bugsLvl = { lvl: 0, prevLvl: 0, nextLvl: 1000 };
+    this.bugsLvl = { lvl: 0, prevLvl: 0, nextLvl: 1000, bugs: 30, timer: 30 };
     this.bugsTimeoutParam = { min: 10, max: 16 }
     this.bugsON = { start: false, end: false };
     this.bugsSaveNormal = { prevLvl: 0, nextLvl: 100 };
@@ -131,6 +127,7 @@ export default class MiniCode {
     this.keyHandlerBind = inputGame.keyHandler.bind(this);
     this.callGameStartBind = this.callGameStart.bind(this);
     this.controlFR = 0;
+    this.controlBugsTimerFR = 0;
     this.spriteKey = 0;
     this.spriteLorem = 0;
     this.spritePen = 0;
@@ -197,6 +194,7 @@ export default class MiniCode {
       animate.drawPenalties.call(this);
       if (this.bugsON.end) {
         animate.drawBugs.call(this)
+        animate.drawBugsTimer.call(this)
       }
     } else {
       animate.drawGameOver.call(this)

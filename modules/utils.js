@@ -197,16 +197,37 @@ const animate = {
       }
     }
     
-    if (this.controlFR % 60 === 0 && this.bugsCount.length < 30) {
-      const posX = this.random(0, this.canvas.width)
-      const posY = this.random(0, this.canvas.height)
-      const rads = this.random(0, Math.PI * 2)
-      const sprite = this.random(0,4)
-      const size = this.random (width/(500/15),width/(500/42))
-      
-      const newBug = { posX, posY, rads, sprite, size }
-      this.bugsCount.push(newBug)
+    if (this.controlFR % 61 === 0 && this.bugsCount.length < this.bugsLvl.bugs) {
+      for (let i = 0; i < 2; i++){
+        const posX = this.random(0, this.canvas.width)
+        const posY = this.random(0, this.canvas.height)
+        const rads = this.random(0, Math.PI * 2)
+        const sprite = this.random(0,4)
+        const size = this.random (width/(500/15),width/(500/42))
+        
+        const newBug = { posX, posY, rads, sprite, size }
+        this.bugsCount.push(newBug)        
+      }
+      // console.log(this.bugsCount.length)  //DEBUG
     }
+  },
+  
+  drawBugsTimer(){
+    const ctx = this.ctx
+    const width = this.canvas.width
+    
+    const posX = width / (500/430)
+    const posY = width / (500/28)
+    const fontSize = width / (500/20) > 15 ? width / (500/20) : 15
+    // ctx.lineWidth = 0.5    // VAI DEPENDER DA COR
+    
+    ctx.save()
+    ctx.fillStyle = "rgb(255,0,0)"
+    ctx.strokeStyle = "rgb(0,0,0)"
+    ctx.font = `bold ${fontSize}px sans-serif`
+    ctx.fillText(this.bugsLvl.timer, posX, posY)
+    ctx.strokeText(this.bugsLvl.timer, posX, posY)
+    ctx.restore()
   },
   
   drawGameOver() {
@@ -624,24 +645,26 @@ const bugsTimeControl = {
     let newFatigue;
     let newDecInter;
     let nextNextLvl;
+    // let newBugs; //CONST ABAIXO
+    // let newTimer;  //CONST ABAIXO
 
-    switch (true) {
-      case lvl === 0:
+    switch (lvl) {
+      case 0:
         newFatigue = 7;
         newDecInter = 500;
         nextNextLvl = 1200;
         break;
-      case lvl === 1:
+      case 1:
         newFatigue = 8;
         newDecInter = 450;
         nextNextLvl = 1400;
         break;
-      case lvl === 2:
+      case 2:
         newFatigue = 9;
         newDecInter = 350;
         nextNextLvl = 1600;
         break;
-      case lvl === 3:
+      case 3:
         newFatigue = 10;
         newDecInter = 300;
         nextNextLvl = 1800;
@@ -651,9 +674,12 @@ const bugsTimeControl = {
         newDecInter = 200;
         nextNextLvl = 2000;
     }
+    const newBugs = 30 + (10 * lvl)
+    const newTimer = 30 - (2 * lvl) > 20 ? 30 - (2 * lvl) : 20
+    console.log(newBugs, newTimer)  //DEBUG
     gameControl.setDecreaseInterval.call(this, newDecInter);
     this.fatiguepower = newFatigue;
-    this.bugsLvl = { lvl: ++lvl, prevLvl: 0, nextLvl: nextNextLvl };
+    this.bugsLvl = { lvl: ++lvl, prevLvl: 0, nextLvl: nextNextLvl, bugs: newBugs, timer: newTimer };
   },
   
   itsNotBugsTime() {
@@ -674,7 +700,30 @@ const bugsTimeControl = {
 }
 
 const timeControl = {
-  // PARA DEPOIS
+  nextFrame(){
+    if (this.controlFR === 60) {
+      this.controlFR = 0;
+    } else {
+      this.controlFR++;
+    }      
+  },
+  
+  updateBugsTimer(){
+    if (this.bugsON.end){
+      if (this.controlBugsTimerFR === 60){
+        this.controlBugsTimerFR = 0
+        
+        if (this.bugsLvl.timer > 0){
+          this.bugsLvl.timer--
+        } else {
+          this.gameOver()
+        }
+      } else {
+        this.controlBugsTimerFR++
+      }
+    }
+  },
+  
 }
 
 export { animate, canvasAux, inputGame, gameControl, lvlControl, bugsTimeControl, timeControl, }
